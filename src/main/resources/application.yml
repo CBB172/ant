@@ -1,0 +1,54 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /
+
+#user:
+#  uid: 123
+#  uname: fyt
+
+spring:
+  thymeleaf:
+    cache: false
+  datasource:
+    name: ant
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      filters: stat
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      url: jdbc:mysql://localhost:3306/ant?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&serverTimezone=GMT%2B8&useSSL=false
+      username: root
+      password: 123
+      initial-size: 1
+      min-idle: 1
+      max-active: 20
+      max-wait: 60000
+      time-between-eviction-runs-millis: 60000
+      min-evictable-idle-time-millis: 300000
+      validation-query: SELECT 'x'
+      test-while-idle: true
+      test-on-borrow: false
+      test-on-return: false
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    password: root
+
+mybatis:
+  mapper-locations: classpath:com/java/boot/*/dao/*.xml,mapper/*/*.xml
+  config-location: classpath:mybatis/mybatis-config.xml
+
+pagehelper:
+  reasonable: true
+
+
+
+#  configuration:
+#    log-impl:
+#  type-aliases-package:
+
+
+#logging:
+#  level: {root: debug}
+#  file: logs/test.log
+

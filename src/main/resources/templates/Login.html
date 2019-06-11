@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<!-- saved from url=(0065)http://www.17sucai.com/preview/730153/2019-04-25/login/index.html -->
+<html lang="en"><head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+  <title>particles.js</title>
+  <meta name="description" content="particles.js is a lightweight JavaScript library for creating particles.">
+  <meta name="author" content="Vincent Garreau">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link rel="stylesheet" media="screen" href="../static/login/login.css">
+</head>
+<body>
+
+<!-- particles.js container -->
+<div id="particles-js" style="display: flex;align-items: center;justify-content: center">
+<canvas class="particles-js-canvas-el" width="1920" height="864" style="width: 100%; height: 100%;"></canvas>
+</div>
+
+<div class="login-page">
+   <div class="login-content">
+       <div class="login-tit">登录</div>
+       <div class="login-input">
+         <input type="text" placeholder="用户名/手机号" id="userId">
+       </div>
+       <div class="login-input">
+        <input type="password" placeholder="密码" id="password" onkeydown='loginP()'>
+       </div>
+       <div class="login-btn">
+           <div class="login-btn-left">
+             <span id="login">登录 </span>
+           </div>
+           <div class="login-btn-right" onclick="changeImg()">
+               <img src="../static/login/check.png" alt="" id="picture"> 记住密码(7day)
+               <span id="tips"></span>
+           </div>
+       </div>
+   </div>
+</div>
+<script src="../static/login/particles.js"></script>
+<script src="../static/login/app.js"></script>
+<script src="../static/js/jquery-3.3.1.min.js"></script>
+<script>
+    var cookiesName="antBlog_for_pri_*_";
+    $(function () {
+        getCookie(cookiesName);
+        $("#login").on("click",function () {
+            userLogin();
+        });
+    });
+    function changeImg(){
+        var pic = document.getElementById('picture');
+        if(pic.getAttribute("src",2) ==="../static/login/check.png"){
+            pic.src ="../static/login/checked.png"
+        }else{
+            pic.src ="../static/login/check.png"
+        }
+    }
+    /*触发Enter事件*/
+    function loginP() {
+        var event=window.event?window.event:event;
+        if(event.keyCode===13){
+            userLogin();
+        }
+    }
+    /*登录事件*/
+    function userLogin() {
+        var userId=$("#userId").val();
+        var password=$("#password").val();
+        var pic = document.getElementById('picture');
+
+        /*登录时存入/消除cookies*/
+        delCookie(cookiesName);
+        if(pic.getAttribute("src",2) ==="../static/login/checked.png"){
+            setCookie(cookiesName,password+"_*_"+userId);
+        }
+
+        /*登录*/
+        $.ajax({
+            url:'/ant/login',
+            data:{"userId":userId,"password":password},
+            type:'post',
+            dataType:'text',
+            success:function (data) {
+                if(data==="400"){
+                    $("#tips").html("用户名或密码错误！");
+                    $("#userId").val("");
+                    $("#password").val("");
+                    delCookie(cookiesName);
+                }else if(data=="200"){
+                    window.location.href="Home";
+                }
+            }
+        });
+    }
+
+    /*************************************Cookies*************************************/
+    /*设置Cookies*/
+    function setCookie(name,value){
+        var Days = 7;
+        var exp = new Date();
+        exp.setTime(exp.getTime() + Days*24*60*60*1000);
+        document.cookie = name + "="+ escape (value) + ";expires=" + exp.toGMTString();
+    }
+    /*删除cookies*/
+    function delCookie(name){
+        var exp = new Date();
+        exp.setTime(exp.getTime() - 1);
+        var cVal=getCookie(name);
+        if(cVal!=null){
+            document.cookie= name + "="+cVal+";expires="+exp.toGMTString();
+        }
+    }
+    /*读取cookies*/
+    function getCookie(name){
+        var cook=document.cookie;
+        try {
+            var c=cook.split(";")[0].split("_*_=")[1];
+            var r=c.split("_*_");
+            if(r.length===2){
+                $("#userId").val(r[1]);
+                $("#password").val(r[0]);
+            }
+            var pic = document.getElementById('picture');
+            pic.src ="../static/login/checked.png";
+            return r;
+        }catch (e) {
+        }
+        return null;
+    }
+</script>
+</body>
+</html>
