@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.java.boot.home.dao.AntUserMapper">
-  <resultMap id="BaseResultMap" type="com.java.boot.home.entity.AntUser">
+<mapper namespace="com.java.boot.record.dao.AntRecordPicMapper">
+  <resultMap id="BaseResultMap" type="com.java.boot.record.entity.AntRecordPic">
     <constructor>
-      <idArg column="ant_id" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="ant_password" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="updatetime" javaType="java.util.Date" jdbcType="TIMESTAMP" />
-      <arg column="state" javaType="java.lang.Long" jdbcType="BIGINT" />
+      <arg column="pid" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="record_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="pic_url" javaType="java.lang.String" jdbcType="VARCHAR" />
     </constructor>
   </resultMap>
   <sql id="Example_Where_Clause">
@@ -68,16 +67,16 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    ant_id, ant_password, updatetime, state
+    pid, record_id, pic_url
   </sql>
-  <select id="selectByExample" parameterType="com.java.boot.home.entity.AntUserExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.java.boot.record.entity.AntRecordPicExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
     </if>
     'true' as QUERYID,
     <include refid="Base_Column_List" />
-    from ant_user
+    from ant_record_pic
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -85,79 +84,60 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from ant_user
-    where ant_id = #{antId,jdbcType=VARCHAR}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-    delete from ant_user
-    where ant_id = #{antId,jdbcType=VARCHAR}
-  </delete>
-  <delete id="deleteByExample" parameterType="com.java.boot.home.entity.AntUserExample">
-    delete from ant_user
+  <delete id="deleteByExample" parameterType="com.java.boot.record.entity.AntRecordPicExample">
+    delete from ant_record_pic
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.java.boot.home.entity.AntUser">
-    insert into ant_user (ant_id, ant_password, updatetime, 
-      state)
-    values (#{antId,jdbcType=VARCHAR}, #{antPassword,jdbcType=VARCHAR}, #{updatetime,jdbcType=TIMESTAMP}, 
-      #{state,jdbcType=BIGINT})
+  <insert id="insert" parameterType="com.java.boot.record.entity.AntRecordPic">
+    insert into ant_record_pic (pid, record_id, pic_url
+      )
+    values (#{pid,jdbcType=INTEGER}, #{recordId,jdbcType=INTEGER}, #{picUrl,jdbcType=VARCHAR}
+      )
   </insert>
-  <insert id="insertSelective" parameterType="com.java.boot.home.entity.AntUser">
-    insert into ant_user
+  <insert id="insertSelective" parameterType="com.java.boot.record.entity.AntRecordPic">
+    insert into ant_record_pic
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="antId != null">
-        ant_id,
+      <if test="pid != null">
+        pid,
       </if>
-      <if test="antPassword != null">
-        ant_password,
+      <if test="recordId != null">
+        record_id,
       </if>
-      <if test="updatetime != null">
-        updatetime,
-      </if>
-      <if test="state != null">
-        state,
+      <if test="picUrl != null">
+        pic_url,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="antId != null">
-        #{antId,jdbcType=VARCHAR},
+      <if test="pid != null">
+        #{pid,jdbcType=INTEGER},
       </if>
-      <if test="antPassword != null">
-        #{antPassword,jdbcType=VARCHAR},
+      <if test="recordId != null">
+        #{recordId,jdbcType=INTEGER},
       </if>
-      <if test="updatetime != null">
-        #{updatetime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="state != null">
-        #{state,jdbcType=BIGINT},
+      <if test="picUrl != null">
+        #{picUrl,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.java.boot.home.entity.AntUserExample" resultType="java.lang.Long">
-    select count(*) from ant_user
+  <select id="countByExample" parameterType="com.java.boot.record.entity.AntRecordPicExample" resultType="java.lang.Long">
+    select count(*) from ant_record_pic
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update ant_user
+    update ant_record_pic
     <set>
-      <if test="record.antId != null">
-        ant_id = #{record.antId,jdbcType=VARCHAR},
+      <if test="record.pid != null">
+        pid = #{record.pid,jdbcType=INTEGER},
       </if>
-      <if test="record.antPassword != null">
-        ant_password = #{record.antPassword,jdbcType=VARCHAR},
+      <if test="record.recordId != null">
+        record_id = #{record.recordId,jdbcType=INTEGER},
       </if>
-      <if test="record.updatetime != null">
-        updatetime = #{record.updatetime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="record.state != null">
-        state = #{record.state,jdbcType=BIGINT},
+      <if test="record.picUrl != null">
+        pic_url = #{record.picUrl,jdbcType=VARCHAR},
       </if>
     </set>
     <if test="_parameter != null">
@@ -165,35 +145,12 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update ant_user
-    set ant_id = #{record.antId,jdbcType=VARCHAR},
-      ant_password = #{record.antPassword,jdbcType=VARCHAR},
-      updatetime = #{record.updatetime,jdbcType=TIMESTAMP},
-      state = #{record.state,jdbcType=BIGINT}
+    update ant_record_pic
+    set pid = #{record.pid,jdbcType=INTEGER},
+      record_id = #{record.recordId,jdbcType=INTEGER},
+      pic_url = #{record.picUrl,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
-  </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.java.boot.home.entity.AntUser">
-    update ant_user
-    <set>
-      <if test="antPassword != null">
-        ant_password = #{antPassword,jdbcType=VARCHAR},
-      </if>
-      <if test="updatetime != null">
-        updatetime = #{updatetime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="state != null">
-        state = #{state,jdbcType=BIGINT},
-      </if>
-    </set>
-    where ant_id = #{antId,jdbcType=VARCHAR}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.java.boot.home.entity.AntUser">
-    update ant_user
-    set ant_password = #{antPassword,jdbcType=VARCHAR},
-      updatetime = #{updatetime,jdbcType=TIMESTAMP},
-      state = #{state,jdbcType=BIGINT}
-    where ant_id = #{antId,jdbcType=VARCHAR}
   </update>
 </mapper>

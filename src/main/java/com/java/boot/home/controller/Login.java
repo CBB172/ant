@@ -1,7 +1,7 @@
-package com.java.boot.ant.controller;
+package com.java.boot.home.controller;
 
-import com.java.boot.ant.entity.AntUser;
-import com.java.boot.ant.service.ILoginService;
+import com.java.boot.home.entity.AntUser;
+import com.java.boot.home.service.ILoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

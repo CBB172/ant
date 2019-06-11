@@ -1,4 +1,4 @@
-package com.java.boot.ant.test;
+package com.java.boot.home.test;
 
 /**
  * Created with IntelliJ IDEA

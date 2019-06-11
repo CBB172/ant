@@ -1,6 +1,6 @@
-package com.java.boot.ant.service;
+package com.java.boot.home.service;
 
-import com.java.boot.ant.entity.AntUser;
+import com.java.boot.home.entity.AntUser;
 
 /**
  * Created with IntelliJ IDEA

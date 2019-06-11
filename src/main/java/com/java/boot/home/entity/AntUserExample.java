@@ -1,4 +1,4 @@
-package com.java.boot.ant.entity;
+package com.java.boot.home.entity;
 
 import java.util.ArrayList;
 import java.util.Date;

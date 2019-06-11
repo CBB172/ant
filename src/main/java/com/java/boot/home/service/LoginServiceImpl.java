@@ -1,7 +1,7 @@
-package com.java.boot.ant.service;
+package com.java.boot.home.service;
 
-import com.java.boot.ant.dao.AntUserMapper;
-import com.java.boot.ant.entity.AntUser;
+import com.java.boot.home.dao.AntUserMapper;
+import com.java.boot.home.entity.AntUser;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;

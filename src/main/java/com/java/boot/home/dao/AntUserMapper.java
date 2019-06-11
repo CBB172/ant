@@ -1,7 +1,7 @@
-package com.java.boot.ant.dao;
+package com.java.boot.home.dao;
 
-import com.java.boot.ant.entity.AntUser;
-import com.java.boot.ant.entity.AntUserExample;
+import com.java.boot.home.entity.AntUser;
+import com.java.boot.home.entity.AntUserExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
