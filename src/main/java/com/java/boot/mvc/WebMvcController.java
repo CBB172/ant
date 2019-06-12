@@ -24,16 +24,16 @@ public class WebMvcController implements WebMvcConfigurer {
     public void addFormatters(FormatterRegistry registry) {
         registry.addConverter(dateConverter);
     }
-
-    @Override
-    public void addInterceptors(InterceptorRegistry registry) {
-
-        InterceptorRegistration ir = registry.addInterceptor(loginInterceptor).addPathPatterns("/**");
-        ir.excludePathPatterns("/static/**");//静态资源
-        ir.excludePathPatterns("/ant/loginpage");//登录页面
-        ir.excludePathPatterns("/ant/login");//登录操作
-
-    }
+//
+//    @Override
+//    public void addInterceptors(InterceptorRegistry registry) {
+//
+//        InterceptorRegistration ir = registry.addInterceptor(loginInterceptor).addPathPatterns("/**");
+//        ir.excludePathPatterns("/static/**");//静态资源
+//        ir.excludePathPatterns("/ant/loginpage");//登录页面
+//        ir.excludePathPatterns("/ant/login");//登录操作
+//
+//    }
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
