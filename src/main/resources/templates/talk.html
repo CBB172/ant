@@ -4,15 +4,39 @@
     <meta charset="UTF-8">
     <title>talk</title>
 </head>
-<script ></script>
+<script src="../static/jquery/jquery-3.3.1.min.js"></script>
+
+<script src="../static/bootstrap/js/bootstrap.js"></script>
+
+<link rel="stylesheet" href="../static/bootstrap/css/bootstrap.css" type="text/css">
+
 
 <script>
-    
-</script>
-<body>
-<div>头部文件</div>
-<div>
+    $(function () {
 
+        $.ajax({
+            url:"userone",
+            type:"post",
+            data:{"userid":1234},
+            dataType:"JSON",
+            success:function (a) {
+
+                console.log(a);
+
+            }
+        })
+
+    })
+</script>
+<style>
+    body{
+        background: ;
+    }
+</style>
+<body>
+<div  class="lead">头部文件</div>
+<div>
+<img src="../Path/aa.jpg">
 </div>
 </body>
 </html>

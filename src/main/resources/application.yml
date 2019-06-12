@@ -41,8 +41,6 @@ mybatis:
 pagehelper:
   reasonable: true
 
-
-
 #  configuration:
 #    log-impl:
 #  type-aliases-package:
