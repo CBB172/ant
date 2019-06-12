@@ -104,63 +104,63 @@ public class AntRecordPicExample {
             criteria.add(new Criterion(condition, value1, value2));
         }
 
-        public Criteria andPidIsNull() {
-            addCriterion("pid is null");
+        public Criteria andPicIdIsNull() {
+            addCriterion("pic_id is null");
             return (Criteria) this;
         }
 
-        public Criteria andPidIsNotNull() {
-            addCriterion("pid is not null");
+        public Criteria andPicIdIsNotNull() {
+            addCriterion("pic_id is not null");
             return (Criteria) this;
         }
 
-        public Criteria andPidEqualTo(Integer value) {
-            addCriterion("pid =", value, "pid");
+        public Criteria andPicIdEqualTo(Integer value) {
+            addCriterion("pic_id =", value, "picId");
             return (Criteria) this;
         }
 
-        public Criteria andPidNotEqualTo(Integer value) {
-            addCriterion("pid <>", value, "pid");
+        public Criteria andPicIdNotEqualTo(Integer value) {
+            addCriterion("pic_id <>", value, "picId");
             return (Criteria) this;
         }
 
-        public Criteria andPidGreaterThan(Integer value) {
-            addCriterion("pid >", value, "pid");
+        public Criteria andPicIdGreaterThan(Integer value) {
+            addCriterion("pic_id >", value, "picId");
             return (Criteria) this;
         }
 
-        public Criteria andPidGreaterThanOrEqualTo(Integer value) {
-            addCriterion("pid >=", value, "pid");
+        public Criteria andPicIdGreaterThanOrEqualTo(Integer value) {
+            addCriterion("pic_id >=", value, "picId");
             return (Criteria) this;
         }
 
-        public Criteria andPidLessThan(Integer value) {
-            addCriterion("pid <", value, "pid");
+        public Criteria andPicIdLessThan(Integer value) {
+            addCriterion("pic_id <", value, "picId");
             return (Criteria) this;
         }
 
-        public Criteria andPidLessThanOrEqualTo(Integer value) {
-            addCriterion("pid <=", value, "pid");
+        public Criteria andPicIdLessThanOrEqualTo(Integer value) {
+            addCriterion("pic_id <=", value, "picId");
             return (Criteria) this;
         }
 
-        public Criteria andPidIn(List<Integer> values) {
-            addCriterion("pid in", values, "pid");
+        public Criteria andPicIdIn(List<Integer> values) {
+            addCriterion("pic_id in", values, "picId");
             return (Criteria) this;
         }
 
-        public Criteria andPidNotIn(List<Integer> values) {
-            addCriterion("pid not in", values, "pid");
+        public Criteria andPicIdNotIn(List<Integer> values) {
+            addCriterion("pic_id not in", values, "picId");
             return (Criteria) this;
         }
 
-        public Criteria andPidBetween(Integer value1, Integer value2) {
-            addCriterion("pid between", value1, value2, "pid");
+        public Criteria andPicIdBetween(Integer value1, Integer value2) {
+            addCriterion("pic_id between", value1, value2, "picId");
             return (Criteria) this;
         }
 
-        public Criteria andPidNotBetween(Integer value1, Integer value2) {
-            addCriterion("pid not between", value1, value2, "pid");
+        public Criteria andPicIdNotBetween(Integer value1, Integer value2) {
+            addCriterion("pic_id not between", value1, value2, "picId");
             return (Criteria) this;
         }
 

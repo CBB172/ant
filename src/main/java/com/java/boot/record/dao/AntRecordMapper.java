@@ -2,6 +2,7 @@ package com.java.boot.record.dao;
 
 import com.java.boot.record.entity.AntRecord;
 import com.java.boot.record.entity.AntRecordExample;
+import com.java.boot.record.entity.AntRecordWithBLOBs;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
@@ -12,25 +13,25 @@ public interface AntRecordMapper {
 
     int deleteByPrimaryKey(Integer recordId);
 
-    int insert(AntRecord record);
+    int insert(AntRecordWithBLOBs record);
 
-    int insertSelective(AntRecord record);
+    int insertSelective(AntRecordWithBLOBs record);
 
-    List<AntRecord> selectByExampleWithBLOBs(AntRecordExample example);
+    List<AntRecordWithBLOBs> selectByExampleWithBLOBs(AntRecordExample example);
 
     List<AntRecord> selectByExample(AntRecordExample example);
 
-    AntRecord selectByPrimaryKey(Integer recordId);
+    AntRecordWithBLOBs selectByPrimaryKey(Integer recordId);
 
-    int updateByExampleSelective(@Param("record") AntRecord record, @Param("example") AntRecordExample example);
+    int updateByExampleSelective(@Param("record") AntRecordWithBLOBs record, @Param("example") AntRecordExample example);
 
-    int updateByExampleWithBLOBs(@Param("record") AntRecord record, @Param("example") AntRecordExample example);
+    int updateByExampleWithBLOBs(@Param("record") AntRecordWithBLOBs record, @Param("example") AntRecordExample example);
 
     int updateByExample(@Param("record") AntRecord record, @Param("example") AntRecordExample example);
 
-    int updateByPrimaryKeySelective(AntRecord record);
+    int updateByPrimaryKeySelective(AntRecordWithBLOBs record);
 
-    int updateByPrimaryKeyWithBLOBs(AntRecord record);
+    int updateByPrimaryKeyWithBLOBs(AntRecordWithBLOBs record);
 
     int updateByPrimaryKey(AntRecord record);
 }

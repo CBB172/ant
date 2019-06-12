@@ -10,13 +10,21 @@ public interface AntRecordPicMapper {
 
     int deleteByExample(AntRecordPicExample example);
 
+    int deleteByPrimaryKey(Integer picId);
+
     int insert(AntRecordPic record);
 
     int insertSelective(AntRecordPic record);
 
     List<AntRecordPic> selectByExample(AntRecordPicExample example);
 
+    AntRecordPic selectByPrimaryKey(Integer picId);
+
     int updateByExampleSelective(@Param("record") AntRecordPic record, @Param("example") AntRecordPicExample example);
 
     int updateByExample(@Param("record") AntRecordPic record, @Param("example") AntRecordPicExample example);
+
+    int updateByPrimaryKeySelective(AntRecordPic record);
+
+    int updateByPrimaryKey(AntRecordPic record);
 }

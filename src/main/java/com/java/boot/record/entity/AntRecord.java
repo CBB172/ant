@@ -7,9 +7,11 @@ public class AntRecord {
 
     private String userId;
 
+    private String recordTitle;
+
     private Integer publishTime;
 
-    private Short author;
+    private Integer author;
 
     private Integer classify;
 
@@ -21,13 +23,12 @@ public class AntRecord {
 
     private Date updateTime;
 
-    private Byte isvalid;
+    private Boolean isvalid;
 
-    private String content;
-
-    public AntRecord(Integer recordId, String userId, Integer publishTime, Short author, Integer classify, Integer viewCount, Integer approveCount, Integer disapproveCount, Date updateTime, Byte isvalid) {
+    public AntRecord(Integer recordId, String userId, String recordTitle, Integer publishTime, Integer author, Integer classify, Integer viewCount, Integer approveCount, Integer disapproveCount, Date updateTime, Boolean isvalid) {
         this.recordId = recordId;
         this.userId = userId;
+        this.recordTitle = recordTitle;
         this.publishTime = publishTime;
         this.author = author;
         this.classify = classify;
@@ -36,20 +37,6 @@ public class AntRecord {
         this.disapproveCount = disapproveCount;
         this.updateTime = updateTime;
         this.isvalid = isvalid;
-    }
-
-    public AntRecord(Integer recordId, String userId, Integer publishTime, Short author, Integer classify, Integer viewCount, Integer approveCount, Integer disapproveCount, Date updateTime, Byte isvalid, String content) {
-        this.recordId = recordId;
-        this.userId = userId;
-        this.publishTime = publishTime;
-        this.author = author;
-        this.classify = classify;
-        this.viewCount = viewCount;
-        this.approveCount = approveCount;
-        this.disapproveCount = disapproveCount;
-        this.updateTime = updateTime;
-        this.isvalid = isvalid;
-        this.content = content;
     }
 
     public AntRecord() {
@@ -72,6 +59,14 @@ public class AntRecord {
         this.userId = userId == null ? null : userId.trim();
     }
 
+    public String getRecordTitle() {
+        return recordTitle;
+    }
+
+    public void setRecordTitle(String recordTitle) {
+        this.recordTitle = recordTitle == null ? null : recordTitle.trim();
+    }
+
     public Integer getPublishTime() {
         return publishTime;
     }
@@ -80,11 +75,11 @@ public class AntRecord {
         this.publishTime = publishTime;
     }
 
-    public Short getAuthor() {
+    public Integer getAuthor() {
         return author;
     }
 
-    public void setAuthor(Short author) {
+    public void setAuthor(Integer author) {
         this.author = author;
     }
 
@@ -128,19 +123,11 @@ public class AntRecord {
         this.updateTime = updateTime;
     }
 
-    public Byte getIsvalid() {
+    public Boolean getIsvalid() {
         return isvalid;
     }
 
-    public void setIsvalid(Byte isvalid) {
+    public void setIsvalid(Boolean isvalid) {
         this.isvalid = isvalid;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content == null ? null : content.trim();
     }
 }

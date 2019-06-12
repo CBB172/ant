@@ -1,14 +1,14 @@
 package com.java.boot.record.entity;
 
 public class AntRecordPic {
-    private Integer pid;
+    private Integer picId;
 
     private Integer recordId;
 
     private String picUrl;
 
-    public AntRecordPic(Integer pid, Integer recordId, String picUrl) {
-        this.pid = pid;
+    public AntRecordPic(Integer picId, Integer recordId, String picUrl) {
+        this.picId = picId;
         this.recordId = recordId;
         this.picUrl = picUrl;
     }
@@ -17,12 +17,12 @@ public class AntRecordPic {
         super();
     }
 
-    public Integer getPid() {
-        return pid;
+    public Integer getPicId() {
+        return picId;
     }
 
-    public void setPid(Integer pid) {
-        this.pid = pid;
+    public void setPicId(Integer picId) {
+        this.picId = picId;
     }
 
     public Integer getRecordId() {

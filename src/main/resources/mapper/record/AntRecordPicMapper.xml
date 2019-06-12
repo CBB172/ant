@@ -3,7 +3,7 @@
 <mapper namespace="com.java.boot.record.dao.AntRecordPicMapper">
   <resultMap id="BaseResultMap" type="com.java.boot.record.entity.AntRecordPic">
     <constructor>
-      <arg column="pid" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <idArg column="pic_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
       <arg column="record_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
       <arg column="pic_url" javaType="java.lang.String" jdbcType="VARCHAR" />
     </constructor>
@@ -67,7 +67,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    pid, record_id, pic_url
+    pic_id, record_id, pic_url
   </sql>
   <select id="selectByExample" parameterType="com.java.boot.record.entity.AntRecordPicExample" resultMap="BaseResultMap">
     select
@@ -84,6 +84,16 @@
       order by ${orderByClause}
     </if>
   </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from ant_record_pic
+    where pic_id = #{picId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from ant_record_pic
+    where pic_id = #{picId,jdbcType=INTEGER}
+  </delete>
   <delete id="deleteByExample" parameterType="com.java.boot.record.entity.AntRecordPicExample">
     delete from ant_record_pic
     <if test="_parameter != null">
@@ -91,16 +101,16 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.java.boot.record.entity.AntRecordPic">
-    insert into ant_record_pic (pid, record_id, pic_url
+    insert into ant_record_pic (pic_id, record_id, pic_url
       )
-    values (#{pid,jdbcType=INTEGER}, #{recordId,jdbcType=INTEGER}, #{picUrl,jdbcType=VARCHAR}
+    values (#{picId,jdbcType=INTEGER}, #{recordId,jdbcType=INTEGER}, #{picUrl,jdbcType=VARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.java.boot.record.entity.AntRecordPic">
     insert into ant_record_pic
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="pid != null">
-        pid,
+      <if test="picId != null">
+        pic_id,
       </if>
       <if test="recordId != null">
         record_id,
@@ -110,8 +120,8 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="pid != null">
-        #{pid,jdbcType=INTEGER},
+      <if test="picId != null">
+        #{picId,jdbcType=INTEGER},
       </if>
       <if test="recordId != null">
         #{recordId,jdbcType=INTEGER},
@@ -130,8 +140,8 @@
   <update id="updateByExampleSelective" parameterType="map">
     update ant_record_pic
     <set>
-      <if test="record.pid != null">
-        pid = #{record.pid,jdbcType=INTEGER},
+      <if test="record.picId != null">
+        pic_id = #{record.picId,jdbcType=INTEGER},
       </if>
       <if test="record.recordId != null">
         record_id = #{record.recordId,jdbcType=INTEGER},
@@ -146,11 +156,29 @@
   </update>
   <update id="updateByExample" parameterType="map">
     update ant_record_pic
-    set pid = #{record.pid,jdbcType=INTEGER},
+    set pic_id = #{record.picId,jdbcType=INTEGER},
       record_id = #{record.recordId,jdbcType=INTEGER},
       pic_url = #{record.picUrl,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.java.boot.record.entity.AntRecordPic">
+    update ant_record_pic
+    <set>
+      <if test="recordId != null">
+        record_id = #{recordId,jdbcType=INTEGER},
+      </if>
+      <if test="picUrl != null">
+        pic_url = #{picUrl,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where pic_id = #{picId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.java.boot.record.entity.AntRecordPic">
+    update ant_record_pic
+    set record_id = #{recordId,jdbcType=INTEGER},
+      pic_url = #{picUrl,jdbcType=VARCHAR}
+    where pic_id = #{picId,jdbcType=INTEGER}
   </update>
 </mapper>

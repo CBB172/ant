@@ -5,29 +5,32 @@
     <constructor>
       <idArg column="record_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
       <arg column="user_id" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="record_title" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="publish_time" javaType="java.lang.Integer" jdbcType="INTEGER" />
-      <arg column="author" javaType="java.lang.Short" jdbcType="SMALLINT" />
+      <arg column="author" javaType="java.lang.Integer" jdbcType="INTEGER" />
       <arg column="classify" javaType="java.lang.Integer" jdbcType="INTEGER" />
       <arg column="view_count" javaType="java.lang.Integer" jdbcType="INTEGER" />
       <arg column="approve_count" javaType="java.lang.Integer" jdbcType="INTEGER" />
       <arg column="disapprove_count" javaType="java.lang.Integer" jdbcType="INTEGER" />
       <arg column="update_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
-      <arg column="isvalid" javaType="java.lang.Byte" jdbcType="TINYINT" />
+      <arg column="isvalid" javaType="java.lang.Boolean" jdbcType="BIT" />
     </constructor>
   </resultMap>
-  <resultMap id="ResultMapWithBLOBs" type="com.java.boot.record.entity.AntRecord">
+  <resultMap id="ResultMapWithBLOBs" type="com.java.boot.record.entity.AntRecordWithBLOBs">
     <constructor>
       <idArg column="record_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
       <arg column="user_id" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="record_title" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="publish_time" javaType="java.lang.Integer" jdbcType="INTEGER" />
-      <arg column="author" javaType="java.lang.Short" jdbcType="SMALLINT" />
+      <arg column="author" javaType="java.lang.Integer" jdbcType="INTEGER" />
       <arg column="classify" javaType="java.lang.Integer" jdbcType="INTEGER" />
       <arg column="view_count" javaType="java.lang.Integer" jdbcType="INTEGER" />
       <arg column="approve_count" javaType="java.lang.Integer" jdbcType="INTEGER" />
       <arg column="disapprove_count" javaType="java.lang.Integer" jdbcType="INTEGER" />
       <arg column="update_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
-      <arg column="isvalid" javaType="java.lang.Byte" jdbcType="TINYINT" />
-      <arg column="content" javaType="java.lang.String" jdbcType="LONGVARCHAR" />
+      <arg column="isvalid" javaType="java.lang.Boolean" jdbcType="BIT" />
+      <arg column="content_detail" javaType="java.lang.String" jdbcType="LONGVARCHAR" />
+      <arg column="content_brief" javaType="java.lang.String" jdbcType="LONGVARCHAR" />
     </constructor>
   </resultMap>
   <sql id="Example_Where_Clause">
@@ -89,11 +92,11 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    record_id, user_id, publish_time, author, classify, view_count, approve_count, disapprove_count, 
-    update_time, isvalid
+    record_id, user_id, record_title, publish_time, author, classify, view_count, approve_count, 
+    disapprove_count, update_time, isvalid
   </sql>
   <sql id="Blob_Column_List">
-    content
+    content_detail, content_brief
   </sql>
   <select id="selectByExampleWithBLOBs" parameterType="com.java.boot.record.entity.AntRecordExample" resultMap="ResultMapWithBLOBs">
     select
@@ -145,17 +148,19 @@
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.java.boot.record.entity.AntRecord">
-    insert into ant_record (record_id, user_id, publish_time, 
-      author, classify, view_count, 
-      approve_count, disapprove_count, update_time, 
-      isvalid, content)
-    values (#{recordId,jdbcType=INTEGER}, #{userId,jdbcType=VARCHAR}, #{publishTime,jdbcType=INTEGER}, 
-      #{author,jdbcType=SMALLINT}, #{classify,jdbcType=INTEGER}, #{viewCount,jdbcType=INTEGER}, 
-      #{approveCount,jdbcType=INTEGER}, #{disapproveCount,jdbcType=INTEGER}, #{updateTime,jdbcType=TIMESTAMP}, 
-      #{isvalid,jdbcType=TINYINT}, #{content,jdbcType=LONGVARCHAR})
+  <insert id="insert" parameterType="com.java.boot.record.entity.AntRecordWithBLOBs">
+    insert into ant_record (record_id, user_id, record_title, 
+      publish_time, author, classify, 
+      view_count, approve_count, disapprove_count, 
+      update_time, isvalid, content_detail, 
+      content_brief)
+    values (#{recordId,jdbcType=INTEGER}, #{userId,jdbcType=VARCHAR}, #{recordTitle,jdbcType=VARCHAR}, 
+      #{publishTime,jdbcType=INTEGER}, #{author,jdbcType=INTEGER}, #{classify,jdbcType=INTEGER}, 
+      #{viewCount,jdbcType=INTEGER}, #{approveCount,jdbcType=INTEGER}, #{disapproveCount,jdbcType=INTEGER}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{isvalid,jdbcType=BIT}, #{contentDetail,jdbcType=LONGVARCHAR}, 
+      #{contentBrief,jdbcType=LONGVARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.java.boot.record.entity.AntRecord">
+  <insert id="insertSelective" parameterType="com.java.boot.record.entity.AntRecordWithBLOBs">
     insert into ant_record
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="recordId != null">
@@ -163,6 +168,9 @@
       </if>
       <if test="userId != null">
         user_id,
+      </if>
+      <if test="recordTitle != null">
+        record_title,
       </if>
       <if test="publishTime != null">
         publish_time,
@@ -188,8 +196,11 @@
       <if test="isvalid != null">
         isvalid,
       </if>
-      <if test="content != null">
-        content,
+      <if test="contentDetail != null">
+        content_detail,
+      </if>
+      <if test="contentBrief != null">
+        content_brief,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -199,11 +210,14 @@
       <if test="userId != null">
         #{userId,jdbcType=VARCHAR},
       </if>
+      <if test="recordTitle != null">
+        #{recordTitle,jdbcType=VARCHAR},
+      </if>
       <if test="publishTime != null">
         #{publishTime,jdbcType=INTEGER},
       </if>
       <if test="author != null">
-        #{author,jdbcType=SMALLINT},
+        #{author,jdbcType=INTEGER},
       </if>
       <if test="classify != null">
         #{classify,jdbcType=INTEGER},
@@ -221,10 +235,13 @@
         #{updateTime,jdbcType=TIMESTAMP},
       </if>
       <if test="isvalid != null">
-        #{isvalid,jdbcType=TINYINT},
+        #{isvalid,jdbcType=BIT},
       </if>
-      <if test="content != null">
-        #{content,jdbcType=LONGVARCHAR},
+      <if test="contentDetail != null">
+        #{contentDetail,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="contentBrief != null">
+        #{contentBrief,jdbcType=LONGVARCHAR},
       </if>
     </trim>
   </insert>
@@ -243,11 +260,14 @@
       <if test="record.userId != null">
         user_id = #{record.userId,jdbcType=VARCHAR},
       </if>
+      <if test="record.recordTitle != null">
+        record_title = #{record.recordTitle,jdbcType=VARCHAR},
+      </if>
       <if test="record.publishTime != null">
         publish_time = #{record.publishTime,jdbcType=INTEGER},
       </if>
       <if test="record.author != null">
-        author = #{record.author,jdbcType=SMALLINT},
+        author = #{record.author,jdbcType=INTEGER},
       </if>
       <if test="record.classify != null">
         classify = #{record.classify,jdbcType=INTEGER},
@@ -265,10 +285,13 @@
         update_time = #{record.updateTime,jdbcType=TIMESTAMP},
       </if>
       <if test="record.isvalid != null">
-        isvalid = #{record.isvalid,jdbcType=TINYINT},
+        isvalid = #{record.isvalid,jdbcType=BIT},
       </if>
-      <if test="record.content != null">
-        content = #{record.content,jdbcType=LONGVARCHAR},
+      <if test="record.contentDetail != null">
+        content_detail = #{record.contentDetail,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.contentBrief != null">
+        content_brief = #{record.contentBrief,jdbcType=LONGVARCHAR},
       </if>
     </set>
     <if test="_parameter != null">
@@ -279,15 +302,17 @@
     update ant_record
     set record_id = #{record.recordId,jdbcType=INTEGER},
       user_id = #{record.userId,jdbcType=VARCHAR},
+      record_title = #{record.recordTitle,jdbcType=VARCHAR},
       publish_time = #{record.publishTime,jdbcType=INTEGER},
-      author = #{record.author,jdbcType=SMALLINT},
+      author = #{record.author,jdbcType=INTEGER},
       classify = #{record.classify,jdbcType=INTEGER},
       view_count = #{record.viewCount,jdbcType=INTEGER},
       approve_count = #{record.approveCount,jdbcType=INTEGER},
       disapprove_count = #{record.disapproveCount,jdbcType=INTEGER},
       update_time = #{record.updateTime,jdbcType=TIMESTAMP},
-      isvalid = #{record.isvalid,jdbcType=TINYINT},
-      content = #{record.content,jdbcType=LONGVARCHAR}
+      isvalid = #{record.isvalid,jdbcType=BIT},
+      content_detail = #{record.contentDetail,jdbcType=LONGVARCHAR},
+      content_brief = #{record.contentBrief,jdbcType=LONGVARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -296,29 +321,33 @@
     update ant_record
     set record_id = #{record.recordId,jdbcType=INTEGER},
       user_id = #{record.userId,jdbcType=VARCHAR},
+      record_title = #{record.recordTitle,jdbcType=VARCHAR},
       publish_time = #{record.publishTime,jdbcType=INTEGER},
-      author = #{record.author,jdbcType=SMALLINT},
+      author = #{record.author,jdbcType=INTEGER},
       classify = #{record.classify,jdbcType=INTEGER},
       view_count = #{record.viewCount,jdbcType=INTEGER},
       approve_count = #{record.approveCount,jdbcType=INTEGER},
       disapprove_count = #{record.disapproveCount,jdbcType=INTEGER},
       update_time = #{record.updateTime,jdbcType=TIMESTAMP},
-      isvalid = #{record.isvalid,jdbcType=TINYINT}
+      isvalid = #{record.isvalid,jdbcType=BIT}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.java.boot.record.entity.AntRecord">
+  <update id="updateByPrimaryKeySelective" parameterType="com.java.boot.record.entity.AntRecordWithBLOBs">
     update ant_record
     <set>
       <if test="userId != null">
         user_id = #{userId,jdbcType=VARCHAR},
       </if>
+      <if test="recordTitle != null">
+        record_title = #{recordTitle,jdbcType=VARCHAR},
+      </if>
       <if test="publishTime != null">
         publish_time = #{publishTime,jdbcType=INTEGER},
       </if>
       <if test="author != null">
-        author = #{author,jdbcType=SMALLINT},
+        author = #{author,jdbcType=INTEGER},
       </if>
       <if test="classify != null">
         classify = #{classify,jdbcType=INTEGER},
@@ -336,39 +365,45 @@
         update_time = #{updateTime,jdbcType=TIMESTAMP},
       </if>
       <if test="isvalid != null">
-        isvalid = #{isvalid,jdbcType=TINYINT},
+        isvalid = #{isvalid,jdbcType=BIT},
       </if>
-      <if test="content != null">
-        content = #{content,jdbcType=LONGVARCHAR},
+      <if test="contentDetail != null">
+        content_detail = #{contentDetail,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="contentBrief != null">
+        content_brief = #{contentBrief,jdbcType=LONGVARCHAR},
       </if>
     </set>
     where record_id = #{recordId,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.java.boot.record.entity.AntRecord">
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.java.boot.record.entity.AntRecordWithBLOBs">
     update ant_record
     set user_id = #{userId,jdbcType=VARCHAR},
+      record_title = #{recordTitle,jdbcType=VARCHAR},
       publish_time = #{publishTime,jdbcType=INTEGER},
-      author = #{author,jdbcType=SMALLINT},
+      author = #{author,jdbcType=INTEGER},
       classify = #{classify,jdbcType=INTEGER},
       view_count = #{viewCount,jdbcType=INTEGER},
       approve_count = #{approveCount,jdbcType=INTEGER},
       disapprove_count = #{disapproveCount,jdbcType=INTEGER},
       update_time = #{updateTime,jdbcType=TIMESTAMP},
-      isvalid = #{isvalid,jdbcType=TINYINT},
-      content = #{content,jdbcType=LONGVARCHAR}
+      isvalid = #{isvalid,jdbcType=BIT},
+      content_detail = #{contentDetail,jdbcType=LONGVARCHAR},
+      content_brief = #{contentBrief,jdbcType=LONGVARCHAR}
     where record_id = #{recordId,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.java.boot.record.entity.AntRecord">
     update ant_record
     set user_id = #{userId,jdbcType=VARCHAR},
+      record_title = #{recordTitle,jdbcType=VARCHAR},
       publish_time = #{publishTime,jdbcType=INTEGER},
-      author = #{author,jdbcType=SMALLINT},
+      author = #{author,jdbcType=INTEGER},
       classify = #{classify,jdbcType=INTEGER},
       view_count = #{viewCount,jdbcType=INTEGER},
       approve_count = #{approveCount,jdbcType=INTEGER},
       disapprove_count = #{disapproveCount,jdbcType=INTEGER},
       update_time = #{updateTime,jdbcType=TIMESTAMP},
-      isvalid = #{isvalid,jdbcType=TINYINT}
+      isvalid = #{isvalid,jdbcType=BIT}
     where record_id = #{recordId,jdbcType=INTEGER}
   </update>
 </mapper>
