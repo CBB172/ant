@@ -1,8 +1,8 @@
 var pJS = function(tag_id, params){
 
-  var canvas_el = document.querySelector('#'+tag_id+' > .particles-js-canvas-el');
+  var canvas_el = document.querySelector('#'+tag_id+' > .particles-jquery-canvas-el');
 
-  /* particles.js variables with default values */
+  /* particles.jquery variables with default values */
   this.pJS = {
     canvas: {
       el: canvas_el,
@@ -1461,7 +1461,7 @@ function isInArray(value, array) {
 }
 
 
-/* ---------- particles.js functions - start ------------ */
+/* ---------- particles.jquery functions - start ------------ */
 
 window.pJSDom = [];
 
@@ -1472,17 +1472,17 @@ window.particlesJS = function(tag_id, params){
   /* no string id? so it's object params, and set the id with default id */
   if(typeof(tag_id) != 'string'){
     params = tag_id;
-    tag_id = 'particles-js';
+    tag_id = 'particles-jquery';
   }
 
   /* no id? set the id to default id */
   if(!tag_id){
-    tag_id = 'particles-js';
+    tag_id = 'particles-jquery';
   }
 
   /* pJS elements */
   var pJS_tag = document.getElementById(tag_id),
-      pJS_canvas_class = 'particles-js-canvas-el',
+      pJS_canvas_class = 'particles-jquery-canvas-el',
       exist_canvas = pJS_tag.getElementsByClassName(pJS_canvas_class);
 
   /* remove canvas if exists into the pJS target tag */
@@ -1503,7 +1503,7 @@ window.particlesJS = function(tag_id, params){
   /* append canvas */
   var canvas = document.getElementById(tag_id).appendChild(canvas_el);
 
-  /* launch particle.js */
+  /* launch particle.jquery */
   if(canvas != null){
     pJSDom.push(new pJS(tag_id, params));
   }
