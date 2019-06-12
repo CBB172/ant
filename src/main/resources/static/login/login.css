@@ -44,7 +44,7 @@ canvas{
 }
 
 
-/* ---- stats.js ---- */
+/* ---- stats.jquery ---- */
 
 .count-particles{
  background: #000022;
@@ -83,7 +83,7 @@ canvas{
 }
 
 
-/* ---- particles.js container ---- */
+/* ---- particles.jquery container ---- */
 
 #particles-js{
  width: 100%;
