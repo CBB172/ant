@@ -1,10 +1,413 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <!-- jQuery (Bootstrap 的所有 JavaScript 插件都依赖 jQuery，所以必须放在前边) -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+    <!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js"></script>
+    <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <!-- 可选的 Bootstrap 主题文件（一般不用引入） -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+    <script type="text/javascript" src="/zTree_v3/js/jquery.ztree.core.js" th:src="@{/zTree_v3/js/jquery.ztree.core.js}"></script>
+    <script type="text/javascript" src="/zTree_v3/js/jquery.ztree.excheck.js" th:src="@{/zTree_v3/js/jquery.ztree.excheck.js}"></script>
+    <script type="text/javascript" src="/zTree_v3/js/jquery.ztree.exedit.js" th:src="@{/zTree_v3/js/jquery.ztree.exedit.js}"></script>
+
+    <link rel="stylesheet" href="/css/bootstrapStyle/bootstrapStyle.css" type="text/css" th:src="@{/css/bootstrapStyle/bootstrapStyle.css}">
+    <script>
+        $(function () {
+            var uid="1723693876";
+            var password="1723693876";
+            var pageNum=0;
+            var pageSize=5;
+            $.ajax({
+                url:'/record/initiate',
+                type:'post',
+                dataType:'text',
+                data:{"uid":uid,"password":password,"pageNum":pageNum,"pageSize":pageSize},
+                success:function (data) {
+                    console.log(data);
+                }
+            })
+        })
+    </script>
+    <style>
+        .row{
+            border: 1px solid #e62cfa;
+        }
+        body{
+            background-image: url("/img/background.jpg");
+            z-index: -2;
+        }
+        .menuList{
+            font:12px verdana, arial, sans-serif; /* 设置文字大小和字体样式 */
+            width: 100%;
+        }
+        .menuList li{
+            position: relative;
+            list-style:none; /* 将默认的列表符号去掉 */
+            padding:0; /* 将默认的内边距去掉 */
+            margin:0; /* 将默认的外边距去掉 */
+            float: left; /* 往左浮动 */
+            display: block;
+        }
+        .topIndexSpan{
+            position: relative;
+            float: left;
+        }
+        .backgroundColor{
+            position: fixed;
+            height: 100%;
+            width: 100%;
+            background-color: rgba(102, 101, 107, 0.5);
+            z-index: -1;
+        }
+        .contentBrief{
+            margin: 15px 1px 15px 1px;
+        }
+    </style>
 </head>
 <body>
+<!--背景-->
+<div class="backgroundColor">
+</div>
+<!--进度条-->
+<div class="progress">
+    <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 45%">
+        <span class="sr-only">45% Complete</span>
+    </div>
+</div>
+<!--导航栏顶部-->
+<!--<nav class="navbar navbar-default navbar-fixed-top container-fluid" style="background-color: rgba(69,68,72,0.39)">
+    <div class="container" style="background-color: rgba(69,68,72,0.39)">
 
+    </div>
+</nav>-->
+<!--第一层row-->
+<div class="row">
+    <div class="col-md-12">
+        <div class="row">
+
+            <div class="col-md-2">
+                <span class="topIndexSpan"><h2>Ant</h2></span>
+            </div>
+
+            <div class="col-md-2">
+            </div>
+
+            <div class="4">
+                <span class="topIndexSpan">
+                    <ul class="nav nav-pills">
+                        <li role="presentation" class="active"><a href="/record/record">日志</a></li>
+                        <li role="presentation"><a href="/record/record">说说</a></li>
+                        <li role="presentation"><a href="#">相册</a></li>
+                        <li role="presentation"><a href="#">相册</a></li>
+                        <li role="presentation"><a href="#">相册</a></li>
+                    </ul>
+                </span>
+            </div>
+
+            <div class="col-md-2">
+            </div>
+
+            <div class="col-md-2">
+                <div class="row">
+                    <div class="col-md-4">
+                        <span class="topIndexSpan">
+                            <!--<img src="#"/>-->
+                        </span>
+                    </div>
+                    <div class="col-md-4">
+                        <span class="topIndexSpan">
+                            <h2>1723693876</h2>
+                        </span>
+                    </div>
+                    <div class="col-md-4">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--第二层row-->
+<div class="row">
+    <div class="col-md-3">
+        <div class="row">
+        </div>
+    </div>
+
+    <!--第二层内容区-->
+    <div class="col-md-7">
+
+        <!--1层-->
+        <div class="row">
+            <div class="col-md-3">
+                <h2>空格</h2>
+            </div>
+            <div class="col-md-9">
+
+            </div>
+        </div>
+
+        <!--2层-->
+        <div class="row">
+
+            <!--左侧-->
+            <div class="col-md-3">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h2>日志分类</h2>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <ul id="treeDemo" class="ztree"></ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h2>日志分类</h2>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h2>日志分类</h2>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--中间-->
+            <div class="col-md-9">
+                <div class="row">
+                    <div class="col-md-12">
+
+                        <ul class="nav nav-tabs">
+                            <li role="presentation" class="active"><a href="#">Home</a></li>
+                            <li role="presentation"><a href="#">Profile</a></li>
+                            <li role="presentation"><a href="#">Messages</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-1">
+                    </div>
+                    <div class="col-md-10">
+
+                        <!--需要遍历获取的单条数据【日志1】-->
+                        <div class="row">
+                            <div class="col-md-12 contentBrief">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        上方**0
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        标题**1
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-1">
+                                        左侧内容2
+                                    </div>
+                                    <div class="col-md-10">
+                                        【【【【主要内容2（存入数据库）】】】】
+                                    </div>
+                                    <div class="col-md-1">
+                                        右侧内容2
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        点赞3
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        评论4
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--需要遍历获取的单条数据【日志1】-->
+                        <div class="row">
+                            <div class="col-md-12 contentBrief">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        上方**0
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        标题**1
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-1">
+                                        左侧内容2
+                                    </div>
+                                    <div class="col-md-10">
+                                        【【【【主要内容2（存入数据库）】】】】
+                                    </div>
+                                    <div class="col-md-1">
+                                        右侧内容2
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        点赞3
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        评论4
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--需要遍历获取的单条数据【日志1】-->
+                        <div class="row">
+                            <div class="col-md-12 contentBrief">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        上方**0
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        标题**1
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-1">
+                                        左侧内容2
+                                    </div>
+                                    <div class="col-md-10">
+                                        【【【【主要内容2（存入数据库）】】】】
+                                    </div>
+                                    <div class="col-md-1">
+                                        右侧内容2
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        点赞3
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        评论4
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--需要遍历获取的单条数据【日志1】-->
+                        <div class="row">
+                            <div class="col-md-12 contentBrief">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        上方**0
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        标题**1
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-1">
+                                        左侧内容2
+                                    </div>
+                                    <div class="col-md-10">
+                                        【【【【主要内容2（存入数据库）】】】】
+                                    </div>
+                                    <div class="col-md-1">
+                                        右侧内容2
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        点赞3
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        评论4
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                    </div>
+                    <div class="col-md-1">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="media">
+                    <div class="media-left">
+                        <a href="#">
+                            <!--<img class="media-object" src="..." alt="...">-->
+                        </a>
+                    </div>
+                    <!--<div class="media-body">
+                        <h4 class="media-heading">Media heading</h4>
+                        ...
+                    </div>-->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="row">
+    <div class="col-md-12">
+
+    </div>
+</div>
 </body>
 </html>

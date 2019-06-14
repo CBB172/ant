@@ -1,8 +1,17 @@
+/* -----------------------------------------------
+/* Author : Vincent Garreau  - vincentgarreau.com
+/* MIT license: http://opensource.org/licenses/MIT
+/* Demo / Generator : vincentgarreau.com/particles.js
+/* GitHub : github.com/VincentGarreau/particles.js
+/* How to use? : Check the GitHub README
+/* v2.0.0
+/* ----------------------------------------------- */
+
 var pJS = function(tag_id, params){
 
-  var canvas_el = document.querySelector('#'+tag_id+' > .particles-jquery-canvas-el');
+  var canvas_el = document.querySelector('#'+tag_id+' > .particles-js-canvas-el');
 
-  /* particles.jquery variables with default values */
+  /* particles.js variables with default values */
   this.pJS = {
     canvas: {
       el: canvas_el,
@@ -1461,7 +1470,7 @@ function isInArray(value, array) {
 }
 
 
-/* ---------- particles.jquery functions - start ------------ */
+/* ---------- particles.js functions - start ------------ */
 
 window.pJSDom = [];
 
@@ -1472,17 +1481,17 @@ window.particlesJS = function(tag_id, params){
   /* no string id? so it's object params, and set the id with default id */
   if(typeof(tag_id) != 'string'){
     params = tag_id;
-    tag_id = 'particles-jquery';
+    tag_id = 'particles-js';
   }
 
   /* no id? set the id to default id */
   if(!tag_id){
-    tag_id = 'particles-jquery';
+    tag_id = 'particles-js';
   }
 
   /* pJS elements */
   var pJS_tag = document.getElementById(tag_id),
-      pJS_canvas_class = 'particles-jquery-canvas-el',
+      pJS_canvas_class = 'particles-js-canvas-el',
       exist_canvas = pJS_tag.getElementsByClassName(pJS_canvas_class);
 
   /* remove canvas if exists into the pJS target tag */
@@ -1503,7 +1512,7 @@ window.particlesJS = function(tag_id, params){
   /* append canvas */
   var canvas = document.getElementById(tag_id).appendChild(canvas_el);
 
-  /* launch particle.jquery */
+  /* launch particle.js */
   if(canvas != null){
     pJSDom.push(new pJS(tag_id, params));
   }
