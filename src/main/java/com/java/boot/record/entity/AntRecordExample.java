@@ -784,6 +784,66 @@ public class AntRecordExample {
             addCriterion("isvalid not between", value1, value2, "isvalid");
             return (Criteria) this;
         }
+
+        public Criteria andIstopIsNull() {
+            addCriterion("istop is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIstopIsNotNull() {
+            addCriterion("istop is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIstopEqualTo(Boolean value) {
+            addCriterion("istop =", value, "istop");
+            return (Criteria) this;
+        }
+
+        public Criteria andIstopNotEqualTo(Boolean value) {
+            addCriterion("istop <>", value, "istop");
+            return (Criteria) this;
+        }
+
+        public Criteria andIstopGreaterThan(Boolean value) {
+            addCriterion("istop >", value, "istop");
+            return (Criteria) this;
+        }
+
+        public Criteria andIstopGreaterThanOrEqualTo(Boolean value) {
+            addCriterion("istop >=", value, "istop");
+            return (Criteria) this;
+        }
+
+        public Criteria andIstopLessThan(Boolean value) {
+            addCriterion("istop <", value, "istop");
+            return (Criteria) this;
+        }
+
+        public Criteria andIstopLessThanOrEqualTo(Boolean value) {
+            addCriterion("istop <=", value, "istop");
+            return (Criteria) this;
+        }
+
+        public Criteria andIstopIn(List<Boolean> values) {
+            addCriterion("istop in", values, "istop");
+            return (Criteria) this;
+        }
+
+        public Criteria andIstopNotIn(List<Boolean> values) {
+            addCriterion("istop not in", values, "istop");
+            return (Criteria) this;
+        }
+
+        public Criteria andIstopBetween(Boolean value1, Boolean value2) {
+            addCriterion("istop between", value1, value2, "istop");
+            return (Criteria) this;
+        }
+
+        public Criteria andIstopNotBetween(Boolean value1, Boolean value2) {
+            addCriterion("istop not between", value1, value2, "istop");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

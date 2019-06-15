@@ -14,6 +14,7 @@
       <arg column="disapprove_count" javaType="java.lang.Integer" jdbcType="INTEGER" />
       <arg column="update_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
       <arg column="isvalid" javaType="java.lang.Boolean" jdbcType="BIT" />
+      <arg column="istop" javaType="java.lang.Boolean" jdbcType="BIT" />
     </constructor>
   </resultMap>
   <resultMap id="ResultMapWithBLOBs" type="com.java.boot.record.entity.AntRecordWithBLOBs">
@@ -29,6 +30,7 @@
       <arg column="disapprove_count" javaType="java.lang.Integer" jdbcType="INTEGER" />
       <arg column="update_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
       <arg column="isvalid" javaType="java.lang.Boolean" jdbcType="BIT" />
+      <arg column="istop" javaType="java.lang.Boolean" jdbcType="BIT" />
       <arg column="content_detail" javaType="java.lang.String" jdbcType="LONGVARCHAR" />
       <arg column="content_brief" javaType="java.lang.String" jdbcType="LONGVARCHAR" />
     </constructor>
@@ -93,7 +95,7 @@
   </sql>
   <sql id="Base_Column_List">
     record_id, user_id, record_title, publish_time, author, classify, view_count, approve_count, 
-    disapprove_count, update_time, isvalid
+    disapprove_count, update_time, isvalid, istop
   </sql>
   <sql id="Blob_Column_List">
     content_detail, content_brief
@@ -152,13 +154,13 @@
     insert into ant_record (record_id, user_id, record_title, 
       publish_time, author, classify, 
       view_count, approve_count, disapprove_count, 
-      update_time, isvalid, content_detail, 
-      content_brief)
+      update_time, isvalid, istop, 
+      content_detail, content_brief)
     values (#{recordId,jdbcType=INTEGER}, #{userId,jdbcType=VARCHAR}, #{recordTitle,jdbcType=VARCHAR}, 
       #{publishTime,jdbcType=INTEGER}, #{author,jdbcType=INTEGER}, #{classify,jdbcType=INTEGER}, 
       #{viewCount,jdbcType=INTEGER}, #{approveCount,jdbcType=INTEGER}, #{disapproveCount,jdbcType=INTEGER}, 
-      #{updateTime,jdbcType=TIMESTAMP}, #{isvalid,jdbcType=BIT}, #{contentDetail,jdbcType=LONGVARCHAR}, 
-      #{contentBrief,jdbcType=LONGVARCHAR})
+      #{updateTime,jdbcType=TIMESTAMP}, #{isvalid,jdbcType=BIT}, #{istop,jdbcType=BIT}, 
+      #{contentDetail,jdbcType=LONGVARCHAR}, #{contentBrief,jdbcType=LONGVARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.java.boot.record.entity.AntRecordWithBLOBs">
     insert into ant_record
@@ -195,6 +197,9 @@
       </if>
       <if test="isvalid != null">
         isvalid,
+      </if>
+      <if test="istop != null">
+        istop,
       </if>
       <if test="contentDetail != null">
         content_detail,
@@ -236,6 +241,9 @@
       </if>
       <if test="isvalid != null">
         #{isvalid,jdbcType=BIT},
+      </if>
+      <if test="istop != null">
+        #{istop,jdbcType=BIT},
       </if>
       <if test="contentDetail != null">
         #{contentDetail,jdbcType=LONGVARCHAR},
@@ -287,6 +295,9 @@
       <if test="record.isvalid != null">
         isvalid = #{record.isvalid,jdbcType=BIT},
       </if>
+      <if test="record.istop != null">
+        istop = #{record.istop,jdbcType=BIT},
+      </if>
       <if test="record.contentDetail != null">
         content_detail = #{record.contentDetail,jdbcType=LONGVARCHAR},
       </if>
@@ -311,6 +322,7 @@
       disapprove_count = #{record.disapproveCount,jdbcType=INTEGER},
       update_time = #{record.updateTime,jdbcType=TIMESTAMP},
       isvalid = #{record.isvalid,jdbcType=BIT},
+      istop = #{record.istop,jdbcType=BIT},
       content_detail = #{record.contentDetail,jdbcType=LONGVARCHAR},
       content_brief = #{record.contentBrief,jdbcType=LONGVARCHAR}
     <if test="_parameter != null">
@@ -329,7 +341,8 @@
       approve_count = #{record.approveCount,jdbcType=INTEGER},
       disapprove_count = #{record.disapproveCount,jdbcType=INTEGER},
       update_time = #{record.updateTime,jdbcType=TIMESTAMP},
-      isvalid = #{record.isvalid,jdbcType=BIT}
+      isvalid = #{record.isvalid,jdbcType=BIT},
+      istop = #{record.istop,jdbcType=BIT}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -367,6 +380,9 @@
       <if test="isvalid != null">
         isvalid = #{isvalid,jdbcType=BIT},
       </if>
+      <if test="istop != null">
+        istop = #{istop,jdbcType=BIT},
+      </if>
       <if test="contentDetail != null">
         content_detail = #{contentDetail,jdbcType=LONGVARCHAR},
       </if>
@@ -388,6 +404,7 @@
       disapprove_count = #{disapproveCount,jdbcType=INTEGER},
       update_time = #{updateTime,jdbcType=TIMESTAMP},
       isvalid = #{isvalid,jdbcType=BIT},
+      istop = #{istop,jdbcType=BIT},
       content_detail = #{contentDetail,jdbcType=LONGVARCHAR},
       content_brief = #{contentBrief,jdbcType=LONGVARCHAR}
     where record_id = #{recordId,jdbcType=INTEGER}
@@ -403,7 +420,8 @@
       approve_count = #{approveCount,jdbcType=INTEGER},
       disapprove_count = #{disapproveCount,jdbcType=INTEGER},
       update_time = #{updateTime,jdbcType=TIMESTAMP},
-      isvalid = #{isvalid,jdbcType=BIT}
+      isvalid = #{isvalid,jdbcType=BIT},
+      istop = #{istop,jdbcType=BIT}
     where record_id = #{recordId,jdbcType=INTEGER}
   </update>
 </mapper>

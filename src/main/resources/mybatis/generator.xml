@@ -67,7 +67,7 @@
         【注意：生成的Example实体类，高级查询文档请见：https://blog.csdn.net/Java_funds/article/details/79527317】
         选择要生成的表--><!--【注意：如果修改生成的xml文件，必须把原有的xml全部删除后再次生成！，否则会报xml重复加载的异常】
         ！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！-->
-		<table tableName="ant_record_pic" domainObjectName="AntRecordPic"
+		<table tableName="ant_record" domainObjectName="AntRecord"
 			   enableCountByExample="true" enableUpdateByExample="true"
 			   enableDeleteByExample="true" enableSelectByExample="true"
 			   selectByExampleQueryId="true"><!--在这里，设置从数据库到实体类的对应关系名。且还可以设置是否生成增删查改方法-->

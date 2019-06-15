@@ -25,7 +25,9 @@ public class AntRecord {
 
     private Boolean isvalid;
 
-    public AntRecord(Integer recordId, String userId, String recordTitle, Integer publishTime, Integer author, Integer classify, Integer viewCount, Integer approveCount, Integer disapproveCount, Date updateTime, Boolean isvalid) {
+    private Boolean istop;
+
+    public AntRecord(Integer recordId, String userId, String recordTitle, Integer publishTime, Integer author, Integer classify, Integer viewCount, Integer approveCount, Integer disapproveCount, Date updateTime, Boolean isvalid, Boolean istop) {
         this.recordId = recordId;
         this.userId = userId;
         this.recordTitle = recordTitle;
@@ -37,6 +39,7 @@ public class AntRecord {
         this.disapproveCount = disapproveCount;
         this.updateTime = updateTime;
         this.isvalid = isvalid;
+        this.istop = istop;
     }
 
     public AntRecord() {
@@ -129,5 +132,13 @@ public class AntRecord {
 
     public void setIsvalid(Boolean isvalid) {
         this.isvalid = isvalid;
+    }
+
+    public Boolean getIstop() {
+        return istop;
+    }
+
+    public void setIstop(Boolean istop) {
+        this.istop = istop;
     }
 }

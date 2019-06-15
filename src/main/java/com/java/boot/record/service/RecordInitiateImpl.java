@@ -1,6 +1,5 @@
 package com.java.boot.record.service;
 
-import com.alibaba.fastjson.JSON;
 import com.java.boot.home.dao.AntUserMapper;
 import com.java.boot.home.entity.AntUser;
 import com.java.boot.record.dao.AntRecordClassifyMapper;
@@ -10,12 +9,8 @@ import com.java.boot.record.entity.AntRecordClassifyExample;
 import com.java.boot.record.entity.AntRecordExample;
 import com.java.boot.record.entity.AntRecordWithBLOBs;
 import org.springframework.stereotype.Service;
-
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created with IntelliJ IDEA
@@ -53,7 +48,7 @@ public class RecordInitiateImpl implements IRecordInitiate{
     }
 
     @Override
-    public List<AntRecordWithBLOBs> initiateVisitor() {
+    public List<AntRecordWithBLOBs> initiateVisitor(int pageNum, int pageSize) {
 
         //游客登录
         AntRecordExample antRecordExample=new AntRecordExample();
@@ -73,7 +68,7 @@ public class RecordInitiateImpl implements IRecordInitiate{
     }
 
     @Override
-    public List<AntRecordWithBLOBs> initiateUser(String uid, String password) {
+    public List<AntRecordWithBLOBs> initiateUser(String uid, String password,int pageNum, int pageSize) {
 
         //已登陆的用户[查看当前用户所有的日志简要信息]
         AntRecordExample antRecordExample=new AntRecordExample();
@@ -92,39 +87,26 @@ public class RecordInitiateImpl implements IRecordInitiate{
     }
 
     @Override
-    public Map<Integer,List<String[]>> getVisitorClassify() {
+    public List<AntRecordClassify> getVisitorClassify() {
+
+        //游客访问分类
         AntRecordClassifyExample antRecordClassifyExample=new AntRecordClassifyExample();
         AntRecordClassifyExample.Criteria criteria = antRecordClassifyExample.createCriteria();
         criteria.andAuthorEqualTo(0);//权限为公开
         criteria.andIsvalidEqualTo(true);//可用为true
         List<AntRecordClassify> classifyList = antRecordClassifyMapper.selectByExample(antRecordClassifyExample);
-        return serializeClassify(classifyList);
+        return classifyList;
     }
 
     @Override
-    public Map<Integer,List<String[]>> getUserClassify(String uid, String password) {
+    public List<AntRecordClassify> getUserClassify(String uid, String password) {
+
+        //本人访问分类
         AntRecordClassifyExample antRecordClassifyExample=new AntRecordClassifyExample();
         AntRecordClassifyExample.Criteria criteria = antRecordClassifyExample.createCriteria();
         criteria.andUserIdEqualTo(uid);//用户为uid
         criteria.andIsvalidEqualTo(true);//可用为true
         List<AntRecordClassify> classifyList = antRecordClassifyMapper.selectByExample(antRecordClassifyExample);
-        return serializeClassify(classifyList);
-    }
-
-    private Map<Integer,List<String[]>> serializeClassify(List<AntRecordClassify> classifyList){
-        Map<Integer,List<String[]>> map=new HashMap<>();
-        for (AntRecordClassify arc:classifyList){
-            Integer key=arc.getLevel();
-            List<String[]>list=map.get(key);
-            String[] strings={arc.getClassifyId().toString(),arc.getFid().toString(), JSON.toJSONString(arc)};
-            if(list==null){
-                list=new ArrayList<>();
-                list.add(strings);
-            }else {
-                list.add(strings);
-            }
-            map.put(key,list);
-        }
-        return map;
+        return classifyList;
     }
 }

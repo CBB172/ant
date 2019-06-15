@@ -7,8 +7,8 @@ public class AntRecordWithBLOBs extends AntRecord {
 
     private String contentBrief;
 
-    public AntRecordWithBLOBs(Integer recordId, String userId, String recordTitle, Integer publishTime, Integer author, Integer classify, Integer viewCount, Integer approveCount, Integer disapproveCount, Date updateTime, Boolean isvalid, String contentDetail, String contentBrief) {
-        super(recordId, userId, recordTitle, publishTime, author, classify, viewCount, approveCount, disapproveCount, updateTime, isvalid);
+    public AntRecordWithBLOBs(Integer recordId, String userId, String recordTitle, Integer publishTime, Integer author, Integer classify, Integer viewCount, Integer approveCount, Integer disapproveCount, Date updateTime, Boolean isvalid, Boolean istop, String contentDetail, String contentBrief) {
+        super(recordId, userId, recordTitle, publishTime, author, classify, viewCount, approveCount, disapproveCount, updateTime, isvalid, istop);
         this.contentDetail = contentDetail;
         this.contentBrief = contentBrief;
     }

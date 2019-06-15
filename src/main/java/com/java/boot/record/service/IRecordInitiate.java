@@ -1,5 +1,6 @@
 package com.java.boot.record.service;
 
+import com.java.boot.record.entity.AntRecordClassify;
 import com.java.boot.record.entity.AntRecordWithBLOBs;
 
 import java.util.List;
@@ -18,14 +19,14 @@ public interface IRecordInitiate {
     String isLogin(String uid, String password);
 
     //【游客】时间顺序获取日志简要
-    List<AntRecordWithBLOBs> initiateVisitor();
+    List<AntRecordWithBLOBs> initiateVisitor(int pageNum, int pageSize);
 
     //【登录人】时间顺序获取日志简要
-    List<AntRecordWithBLOBs> initiateUser(String uid, String password);
+    List<AntRecordWithBLOBs> initiateUser(String uid, String password,int pageNum, int pageSize);
 
     //获取【游客】文件夹和子文件夹分类数量
-    Map<Integer,List<String[]>> getVisitorClassify();
+    List<AntRecordClassify> getVisitorClassify();
 
     //获取【登录用户】的文件夹和子文件夹分类数量
-    Map<Integer,List<String[]>> getUserClassify(String uid, String password);
+    List<AntRecordClassify> getUserClassify(String uid, String password);
 }

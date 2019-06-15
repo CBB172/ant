@@ -9,14 +9,20 @@ server:
 
 spring:
   thymeleaf:
+    prefix: classpath:/templates/
+    suffix: .html
     cache: false
+  resources:
+   static-locations: classpath:/static/
+  mvc:
+   static-path-pattern: /**
   datasource:
     name: ant
     type: com.alibaba.druid.pool.DruidDataSource
     druid:
       filters: stat
       driver-class-name: com.mysql.cj.jdbc.Driver
-      url: jdbc:mysql://192.168.13.246:3306/ant?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&serverTimezone=GMT%2B8&useSSL=false
+      url: jdbc:mysql://localhost:3306/ant?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&serverTimezone=GMT%2B8&useSSL=false
       username: root
       password: 123
       initial-size: 1
@@ -29,10 +35,17 @@ spring:
       test-while-idle: true
       test-on-borrow: false
       test-on-return: false
-  redis:
-    host: 127.0.0.1
-    port: 6379
-    password: root
+
+  #redis:
+  #  host: 127.0.0.1
+  #  port: 6379
+  #  password: root
+  #  sentinel:
+  #    master: mymaster
+  #    nodes:
+  #      - 192.168.11.217:26379
+  #      - 192.168.11.217:26380
+  #      - 192.168.11.217:26381
 
 mybatis:
   mapper-locations: classpath:com/java/boot/*/dao/*.xml,mapper/*/*.xml

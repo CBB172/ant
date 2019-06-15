@@ -13,48 +13,70 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
     <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-
     <script type="text/javascript" src="/zTree_v3/js/jquery.ztree.core.js" th:src="@{/zTree_v3/js/jquery.ztree.core.js}"></script>
     <script type="text/javascript" src="/zTree_v3/js/jquery.ztree.excheck.js" th:src="@{/zTree_v3/js/jquery.ztree.excheck.js}"></script>
     <script type="text/javascript" src="/zTree_v3/js/jquery.ztree.exedit.js" th:src="@{/zTree_v3/js/jquery.ztree.exedit.js}"></script>
-
     <link rel="stylesheet" href="/css/bootstrapStyle/bootstrapStyle.css" type="text/css" th:src="@{/css/bootstrapStyle/bootstrapStyle.css}">
+    <script type="text/javascript" src="/js/transferCode.js" th:src="@{/js/transferCode.js}"></script>
     <script>
         $(function () {
-            var uid="1723693876";
-            var password="1723693876";
-            var pageNum=0;
-            var pageSize=5;
-            $.ajax({
-                url:'/record/initiate',
-                type:'post',
-                dataType:'text',
-                data:{"uid":uid,"password":password,"pageNum":pageNum,"pageSize":pageSize},
-                success:function (data) {
-                    console.log(data);
-                }
-            })
+            /*var initiateData=js.lang.String.decodeHtml("[[${folder}]]");*/
+            $("#writeRecord").on("click",function () {
+                clearBFClass();
+                $("#bf3").prop("class","active");
+                $("#mainContent div").remove();
+            });
+            $("#bf0").on("click",function () {
+
+            });
         })
+    </script>
+    <script>
+        /*清除样式&*/
+        function clearBFClass() {
+            for (var i = 0; i < 10; i++) {
+                try {
+                    $("#bf"+i+"").prop("class","")
+                }catch (e) {
+                    break;
+                }
+            }
+        }
+        /*点击分类的日志*/
+        function determineClassify(obj) {
+            var sess=sessionStorage.getItem("loginUser");
+            var classifyId=$(obj).attr("classifyId");
+            var uid=1723693876;
+            var password=1723693876;
+            var pageNum=0;
+            var pageSize=10;
+            /*加上ResponseBody&不加上ResponseBody效果一样！*/
+            //load方式：body全清空，并返回特定的fragment(/record/RecordHome::fra)
+            //ajax方式：body不清空，并返回特定的fragment(/record/RecordHome::fra)
+            /*$("#body").load(
+                "/record/recordSelect",
+                {"uid":uid, "password":password, "classifyId":classifyId, "pageNum":pageNum, "pageSize":pageSize},
+                function(response,status){
+                    console.log(response);
+                });*/
+            $.ajax({
+                url: "/record/recordSelect",
+                data:{"uid":uid, "password":password, "classifyId":classifyId, "pageNum":pageNum, "pageSize":pageSize},
+                type: 'POST',
+                success: function (data) {
+                    console.log(data);
+                    $("#mainContent").html(data);
+                }
+            });
+        }
     </script>
     <style>
         .row{
-            border: 1px solid #e62cfa;
+            border: 1px solid #7d7bfa;
         }
         body{
             background-image: url("/img/background.jpg");
             z-index: -2;
-        }
-        .menuList{
-            font:12px verdana, arial, sans-serif; /* 设置文字大小和字体样式 */
-            width: 100%;
-        }
-        .menuList li{
-            position: relative;
-            list-style:none; /* 将默认的列表符号去掉 */
-            padding:0; /* 将默认的内边距去掉 */
-            margin:0; /* 将默认的外边距去掉 */
-            float: left; /* 往左浮动 */
-            display: block;
         }
         .topIndexSpan{
             position: relative;
@@ -72,68 +94,10 @@
         }
     </style>
 </head>
-<body>
-<!--背景-->
-<div class="backgroundColor">
-</div>
-<!--进度条-->
-<div class="progress">
-    <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 45%">
-        <span class="sr-only">45% Complete</span>
-    </div>
-</div>
-<!--导航栏顶部-->
-<!--<nav class="navbar navbar-default navbar-fixed-top container-fluid" style="background-color: rgba(69,68,72,0.39)">
-    <div class="container" style="background-color: rgba(69,68,72,0.39)">
+<body id="body">
 
-    </div>
-</nav>-->
-<!--第一层row-->
-<div class="row">
-    <div class="col-md-12">
-        <div class="row">
-
-            <div class="col-md-2">
-                <span class="topIndexSpan"><h2>Ant</h2></span>
-            </div>
-
-            <div class="col-md-2">
-            </div>
-
-            <div class="4">
-                <span class="topIndexSpan">
-                    <ul class="nav nav-pills">
-                        <li role="presentation" class="active"><a href="/record/record">日志</a></li>
-                        <li role="presentation"><a href="/record/record">说说</a></li>
-                        <li role="presentation"><a href="#">相册</a></li>
-                        <li role="presentation"><a href="#">相册</a></li>
-                        <li role="presentation"><a href="#">相册</a></li>
-                    </ul>
-                </span>
-            </div>
-
-            <div class="col-md-2">
-            </div>
-
-            <div class="col-md-2">
-                <div class="row">
-                    <div class="col-md-4">
-                        <span class="topIndexSpan">
-                            <!--<img src="#"/>-->
-                        </span>
-                    </div>
-                    <div class="col-md-4">
-                        <span class="topIndexSpan">
-                            <h2>1723693876</h2>
-                        </span>
-                    </div>
-                    <div class="col-md-4">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+<!--topFrag-->
+<div th:replace="/record/RecordHome::top"></div>
 
 <!--第二层row-->
 <div class="row">
@@ -141,7 +105,6 @@
         <div class="row">
         </div>
     </div>
-
     <!--第二层内容区-->
     <div class="col-md-7">
 
@@ -165,7 +128,6 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <h2>日志分类</h2>
-
                             </div>
                         </div>
                     </div>
@@ -184,7 +146,35 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <h2>日志分类</h2>
-
+                                <div class="panel-body">
+                                    <div class="list-group" id="recordClassifyDiv">
+                                        <button type="button" class="list-group-item">默认</button>
+                                        <!--private Integer classifyId;-->
+                                        <!--private Integer fid;-->
+                                        <!--private String userId;-->
+                                        <!--private String classifyName;-->
+                                        <!--private String comment;-->
+                                        <!--private Integer author;-->
+                                        <!--private Integer level;-->
+                                        <!--private Date updateTime;-->
+                                        <!--private Boolean isvalid;-->
+                                        <div th:each="c:${classify}">
+                                            <button type="button" class="list-group-item"
+                                                    th:classifyId="${c.classifyId}"
+                                                    th:fid="${c.fid}"
+                                                    th:userId="${c.userId}"
+                                                    th:classifyName="${c.classifyName}"
+                                                    th:comment="${c.comment}"
+                                                    th:author="${c.author}"
+                                                    th:level="${c.level}"
+                                                    th:updateTime="${c.updateTime}"
+                                                    th:isvalid="${c.isvalid}"
+                                                    th:text="${c.classifyName}"
+                                                    onclick="determineClassify(this)"
+                                            ></button>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -194,7 +184,6 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <h2>日志分类</h2>
-
                             </div>
                         </div>
                     </div>
@@ -204,166 +193,19 @@
             <div class="col-md-9">
                 <div class="row">
                     <div class="col-md-12">
-
                         <ul class="nav nav-tabs">
-                            <li role="presentation" class="active"><a href="#">Home</a></li>
-                            <li role="presentation"><a href="#">Profile</a></li>
-                            <li role="presentation"><a href="#">Messages</a></li>
+                            <li role="presentation" class="active" id="bf0"><a href="#">Home</a></li>
+                            <li role="presentation" id="bf1"><a href="#">Profile</a></li>
+                            <li role="presentation" id="bf2"><a href="#">Messages</a></li>
+                            <li role="presentation" style="position: relative; float: right" id="bf3"><a href="#" id="writeRecord">写日志</a></li>
                         </ul>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-1">
                     </div>
-                    <div class="col-md-10">
-
-                        <!--需要遍历获取的单条数据【日志1】-->
-                        <div class="row">
-                            <div class="col-md-12 contentBrief">
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        上方**0
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        标题**1
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-1">
-                                        左侧内容2
-                                    </div>
-                                    <div class="col-md-10">
-                                        【【【【主要内容2（存入数据库）】】】】
-                                    </div>
-                                    <div class="col-md-1">
-                                        右侧内容2
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        点赞3
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        评论4
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!--需要遍历获取的单条数据【日志1】-->
-                        <div class="row">
-                            <div class="col-md-12 contentBrief">
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        上方**0
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        标题**1
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-1">
-                                        左侧内容2
-                                    </div>
-                                    <div class="col-md-10">
-                                        【【【【主要内容2（存入数据库）】】】】
-                                    </div>
-                                    <div class="col-md-1">
-                                        右侧内容2
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        点赞3
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        评论4
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!--需要遍历获取的单条数据【日志1】-->
-                        <div class="row">
-                            <div class="col-md-12 contentBrief">
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        上方**0
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        标题**1
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-1">
-                                        左侧内容2
-                                    </div>
-                                    <div class="col-md-10">
-                                        【【【【主要内容2（存入数据库）】】】】
-                                    </div>
-                                    <div class="col-md-1">
-                                        右侧内容2
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        点赞3
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        评论4
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!--需要遍历获取的单条数据【日志1】-->
-                        <div class="row">
-                            <div class="col-md-12 contentBrief">
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        上方**0
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        标题**1
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-1">
-                                        左侧内容2
-                                    </div>
-                                    <div class="col-md-10">
-                                        【【【【主要内容2（存入数据库）】】】】
-                                    </div>
-                                    <div class="col-md-1">
-                                        右侧内容2
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        点赞3
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        评论4
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-
-
+                    <div class="col-md-10" id="mainContent" >
+                        <div th:replace="/record/RecordHome::showContentBrief"></div>
                     </div>
                     <div class="col-md-1">
                     </div>
@@ -391,23 +233,181 @@
 </div>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 <div class="row">
     <div class="col-md-12">
 
     </div>
 </div>
+
+
+
+<!--<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<Fragment<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<-->
+<div hidden="hidden">
+
+    <div th:fragment="top">
+        <!--背景-->
+        <div class="backgroundColor">
+        </div>
+        <!--进度条-->
+        <div class="progress">
+            <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 45%">
+                <span class="sr-only">45% Complete</span>
+            </div>
+        </div>
+        <!--导航栏顶部-->
+        <!--<nav class="navbar navbar-default navbar-fixed-top">
+            <div class="container">
+                ...
+            </div>
+        </nav>-->
+        <!--第一层row-->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-2">
+                        <span class="topIndexSpan"><h2>Ant</h2></span>
+                    </div>
+                    <div class="col-md-2">
+                    </div>
+                    <div class="4">
+                <span class="topIndexSpan">
+                    <ul class="nav nav-pills">
+                        <li role="presentation" class="active"><a href="/record/record">日志</a></li>
+                        <li role="presentation"><a href="/record/record">说说</a></li>
+                        <li role="presentation"><a href="#">相册</a></li>
+                        <li role="presentation"><a href="#">相册</a></li>
+                        <li role="presentation"><a href="#">相册</a></li>
+                    </ul>
+                </span>
+                    </div>
+                    <div class="col-md-2">
+                    </div>
+                    <div class="col-md-2">
+                        <div class="row">
+                            <div class="col-md-4">
+                        <span class="topIndexSpan">
+                            <!--<img src="#"/>-->
+                        </span>
+                            </div>
+                            <div class="col-md-4">
+                        <span class="topIndexSpan">
+                            <h2>1723693876</h2>
+                        </span>
+                            </div>
+                            <div class="col-md-4">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div th:fragment="showContentBrief">
+        <!--********************主显示界面********************-->
+        <!--private Integer recordId;-->
+        <!--private String userId;-->
+        <!--private String recordTitle;-->
+        <!--private Integer publishTime;-->
+        <!--private Integer author;-->
+        <!--private Integer classify;-->
+        <!--private Integer viewCount;-->
+        <!--private Integer approveCount;-->
+        <!--private Integer disapproveCount;-->
+        <!--private Date updateTime;-->
+        <!--private Boolean isvalid;-->
+        <!--private Boolean istop;-->
+        <!--private String contentDetail;-->
+        <!--private String contentBrief;-->
+        <!--需要遍历获取的单条数据【日志1】-->
+        <div id="contentBrief" th:each="c:${contentBrief}" >
+            <div class="row">
+                <div class="col-md-12 contentBrief">
+                    <div class="row">
+                        <div class="col-md-12" th:text="${c.userId}">
+                            (ID/昵称)
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12" th:text="${c.recordTitle}">
+                            日志标题()
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-1" th:text="${c.recordId}">
+                        </div>
+                        <div class="col-md-10" th:text="${c.contentBrief}">
+                            【【【【主要内容2（存入数据库）】】】】
+                        </div>
+                        <div class="col-md-1" th:text="${c.istop}">
+                            操作(修改，查看，删除，修改分类，置顶...)
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <!--阅览数-->
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            阅
+                                        </div>
+                                        <div class="col-md-6">
+                                            <h6 th:text="${c.viewCount}"></h6>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                </div>
+                                <div class="col-md-2">
+                                    <!--点赞-->
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            赞
+                                        </div>
+                                        <div class="col-md-6">
+                                            <h6 th:text="${c.approveCount}"></h6>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <!--踩-->
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            踩：
+                                        </div>
+                                        <div class="col-md-6">
+                                            <h6 th:text="${c.disapproveCount}"></h6>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <!--评论-->
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <span><button type="button">评论</button></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12" th:text="${c.classify}">
+                            评论区。。。
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+
+
+
+
 </body>
 </html>
