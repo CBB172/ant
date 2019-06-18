@@ -2,9 +2,51 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>$Title$</title>
+    <title>Title</title>
 </head>
+<script src="../static/jquery/jquery-3.3.1.min.js"></script>
+<script src="../static/ss.js"></script>
+<script src="../static/sss.js"></script>
+<link rel="stylesheet" href="../static/ss.css" type="text/css">
 <body>
-$END$
+<p class='p_txt'>上传霸屏图片：</p>
+<form class="container" enctype="multipart/form-data" method="post" id=''>
+    <!-- 裁减框 -->
+    <div class="imageBox" id="imageBox">
+        <div class="thumbBox"></div>
+        <div class="spinner">+</div>
+    </div>
+    <!-- 裁减之后的图片 -->
+    <div class="cropped" id="cropped">
+        <input type="image" id="cropImg" alt='裁减之后的图片' name="裁减之后的图片"/>
+    </div>
+    <!-- 上传、放大、缩小、裁减 -->
+    <div class="action">
+        <a class="selectFileDiv uploadImg">
+            上传图像
+            <input type="file" id="image" name="图像">
+        </a>
+        <input type="button" id="btnCrop" value="裁减" name='裁减' class="selectFileDiv actionBtn"/>
+        <input type="button" id="btnZoomIn" value="+" name='放大' class="selectFileDiv actionBtn"/>
+        <input type="button" id="btnZoomOut" value="-" name="缩小" class="selectFileDiv actionBtn"/>
+    </div>
+    <p class="p_txt p_txt2">霸屏时间:</p>
+    <div class="action paScreenTimeContainer">
+        <div class="perTimeParent">
+            <img src="checkIcon.png" id="checkIcon1" class="checkIcon">
+            <input type="button" name="paScreentime1" id="1" value="8 s" class="selectFileDiv paScreentime">
+        </div>
+        <div class="perTimeParent">
+            <img src="checkIcon.png" id="checkIcon2" class="checkIcon">
+            <input type="button" name="paScreentime2" id="2" value="18 s" class="selectFileDiv paScreentime">
+        </div>
+        <div class="perTimeParent">
+            <img src="checkIcon.png" id="checkIcon3" class="checkIcon">
+            <input type="button" name="paScreentime3" id="3" value="58 s" class="selectFileDiv paScreentime">
+        </div>
+    </div>
+    <p class="p_txt" id="feeContainer">您需支付:<strong id="totalFee"></strong>元</p>
+    <input type="button" name="payBtn" id="payBtn" class="selectFileDiv payBtn" value="支付">
+</form>
 </body>
 </html>
