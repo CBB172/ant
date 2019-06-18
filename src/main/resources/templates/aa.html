@@ -1,5 +1,10 @@
 <!DOCTYPE html>
 <html>
+        <script src="../static/jquery/jquery-3.3.1.min.js"></script>
+
+        <script src="../static/bootstrap/js/bootstrap.js"></script>
+        
+        <link rel="stylesheet" href="../static/bootstrap/css/bootstrap.css" type="text/css">
 <head>
     <meta charset="UTF-8">
     <title>图片上传预览</title>
@@ -39,7 +44,7 @@
 </style>
 <body>
 <div class="a1">
-<img id="preview" />
+<img id="preview" class="img-circle"/>
 </div>
 <br />
 <input type="file" name="file" onchange="imgPreview(this)" />
