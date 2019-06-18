@@ -7,11 +7,19 @@
 <body>
 Ant_Blog
 功能：
-
+[Common]
+    字典表
 [说说]
 
 [日志]
-
+    日志表*
+    record_id user_id record_title content_detail content_brief publish_time author classify view_count approve_count disapprove_count update_time isvalid istop
+    日志图片地址*
+    pic_id record_id pic_url
+    日志分类表*
+    classify_id fid user_id classify_name comment author level update_time isvalid
+    日志评论
+    comment_id comment_fid record_id comment_user_id author view_count approve_count disapprove_count comment_content publish_time isvalid
 [相册]
 
 [留言]
