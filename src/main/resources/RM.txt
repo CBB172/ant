@@ -1,0 +1,42 @@
+工作中遇到的问题：
+1.BootStrap4使用：
+  BootStrap4可视化布局，官网自动生成的代码，放到项目中排版会乱，且有些功能不能使用。
+    解决方法：查看控制台，导入所需要的js()，功能可用但排版还是会乱
+
+2.IDEA里Thymeleaf路径识别
+  项目中可用，识别出来，但IDEA识别的路径是当前文件所在包，就像SpringBoot的Application启动类一样
+  但SpringBoot是从resources目录的templates模板文件夹开始识别，以templates作为根目录，
+  这会导致，写fragment片段时IDEA提示不出来甚至识别失败，但可以运行，这应该是IDEA里设置的问题
+    解决方法：IDEA里HTML配置无误，但还是这样，是开发工具的识别路径问题，暂无方法，运行正常
+
+3.Thymeleaf技术局部刷新div或fragment的问题
+  最好用Ajax局部刷新
+  因为body.reload，整个页面的body内容都刷新且全部丢失，地址栏不变，但引用的JS，CSS还是在的，
+
+4.后端传到前端，字符被转义的问题
+  SpringBoot 后端为@RequestMapping Model里存放的对象/字符串传到前端被转义
+  (方法:前端单独写一个JS方法，用正则转过来);
+
+5.IDEA逆向工程，分页查询
+
+
+6.多个查询的定时任务，
+  比如常用的字典表，颜色，品牌，商标图片的url地址等，特别常用的数据，每次都从数据库
+  查显然不合适，这要放在redis里，通过定时更新，刷新redis里面的值。但各个数据的
+  查询条件不一致，查询结果更是。那怎么通过定时任务更新redis里的值
+    解决方法：把查询条件放到redis里的一个list或set集合，通过遍历取查询条件
+    查对应的数据库，再把结果放回redis里对应的key和结果集上
+
+
+
+
+
+
+
+******：博客模板
+http://demo.cssmoban.com/cssthemes/templatemo_084_design_blog/index.html#
+http://demo.cssmoban.com/cssthemes/Outdoor11/index.html
+http://demo.cssmoban.com/cssthemes/template_287_ancient/index.html#
+http://demo.cssmoban.com/cssthemes1/chn2_memoir/index.html
+http://demo.cssmoban.com/cssthemes1/ftol_49/index.html
+http://demo.cssmoban.com/cssthemes1/tcu_style/index.html

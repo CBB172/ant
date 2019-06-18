@@ -13,8 +13,8 @@ import java.util.List;
  */
 public interface IRecordSelect {
     //【游客】时间顺序获取日志选择性的简要(根据分类Id)
-    List<AntRecordWithBLOBs> recordSelectVisitor(int pageNum, int pageSize);
+    List<AntRecordWithBLOBs> recordSelectVisitor(int classifyId, int pageNum, int pageSize);
 
     //【登录人】时间顺序获取日志简要(根据分类Id)
-    List<AntRecordWithBLOBs> recordSelectUser(String uid, String password,String classifyId,int pageNum,int pageSize);
+    List<AntRecordWithBLOBs> recordSelectUser(String uid, String password,int classifyId,int pageNum,int pageSize);
 }

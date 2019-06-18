@@ -13,16 +13,16 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
     <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-    <script type="text/javascript" src="/zTree_v3/js/jquery.ztree.core.js" th:src="@{/zTree_v3/js/jquery.ztree.core.js}"></script>
-    <script type="text/javascript" src="/zTree_v3/js/jquery.ztree.excheck.js" th:src="@{/zTree_v3/js/jquery.ztree.excheck.js}"></script>
-    <script type="text/javascript" src="/zTree_v3/js/jquery.ztree.exedit.js" th:src="@{/zTree_v3/js/jquery.ztree.exedit.js}"></script>
-    <link rel="stylesheet" href="/css/bootstrapStyle/bootstrapStyle.css" type="text/css" th:src="@{/css/bootstrapStyle/bootstrapStyle.css}">
-    <script type="text/javascript" src="/js/transferCode.js" th:src="@{/js/transferCode.js}"></script>
+    <script type="text/javascript" src="/static/zTree_v3/js/jquery.ztree.core.js" th:src="@{/zTree_v3/js/jquery.ztree.core.js}"></script>
+    <script type="text/javascript" src="/static/zTree_v3/js/jquery.ztree.excheck.js" th:src="@{/zTree_v3/js/jquery.ztree.excheck.js}"></script>
+    <script type="text/javascript" src="/static/zTree_v3/js/jquery.ztree.exedit.js" th:src="@{/zTree_v3/js/jquery.ztree.exedit.js}"></script>
+    <link rel="stylesheet" href="/static/css/bootstrapStyle/bootstrapStyle.css" type="text/css" th:src="@{/css/bootstrapStyle/bootstrapStyle.css}">
+    <script type="text/javascript" src="/static/js/transferCode.js" th:src="@{/js/transferCode.js}"></script>
     <script>
         $(function () {
             /*var initiateData=js.lang.String.decodeHtml("[[${folder}]]");*/
             $("#writeRecord").on("click",function () {
-                clearBFClass();
+                clearContentBarClass();
                 $("#bf3").prop("class","active");
                 $("#mainContent div").remove();
             });
@@ -32,8 +32,8 @@
         })
     </script>
     <script>
-        /*清除样式&*/
-        function clearBFClass() {
+        /*清除顶部分类样式&*/
+        function clearContentBarClass() {
             for (var i = 0; i < 10; i++) {
                 try {
                     $("#bf"+i+"").prop("class","")
@@ -41,6 +41,10 @@
                     break;
                 }
             }
+        }
+        /*清除左边分类样式为默认样式*/
+        function clearBtnClass() {
+            $("#classifyButtonGroup div button").prop("class","list-group-item");
         }
         /*点击分类的日志*/
         function determineClassify(obj) {
@@ -65,17 +69,24 @@
                 type: 'POST',
                 success: function (data) {
                     console.log(data);
+                    clearBtnClass();
+                    $(obj).prop("class","list-group-item btn btn-success");
                     $("#mainContent").html(data);
                 }
             });
         }
+    </script>
+    <script>
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
     </script>
     <style>
         .row{
             border: 1px solid #7d7bfa;
         }
         body{
-            background-image: url("/img/background.jpg");
+            background-image: url("/static/img/background.jpg");
             z-index: -2;
         }
         .topIndexSpan{
@@ -148,7 +159,7 @@
                                 <h2>日志分类</h2>
                                 <div class="panel-body">
                                     <div class="list-group" id="recordClassifyDiv">
-                                        <button type="button" class="list-group-item">默认</button>
+
                                         <!--private Integer classifyId;-->
                                         <!--private Integer fid;-->
                                         <!--private String userId;-->
@@ -158,20 +169,28 @@
                                         <!--private Integer level;-->
                                         <!--private Date updateTime;-->
                                         <!--private Boolean isvalid;-->
-                                        <div th:each="c:${classify}">
-                                            <button type="button" class="list-group-item"
-                                                    th:classifyId="${c.classifyId}"
-                                                    th:fid="${c.fid}"
-                                                    th:userId="${c.userId}"
-                                                    th:classifyName="${c.classifyName}"
-                                                    th:comment="${c.comment}"
-                                                    th:author="${c.author}"
-                                                    th:level="${c.level}"
-                                                    th:updateTime="${c.updateTime}"
-                                                    th:isvalid="${c.isvalid}"
-                                                    th:text="${c.classifyName}"
-                                                    onclick="determineClassify(this)"
-                                            ></button>
+                                        <button type="button" class="list-group-item" th:classifyId="-1" onclick="determineClassify(this)">默认</button>
+                                        <div th:each="c:${classify}" id="classifyButtonGroup">
+                                            <div>
+                                                <button type="button" class="list-group-item-success"
+                                                        th:classifyId="${c.classifyId}"
+                                                        th:fid="${c.fid}"
+                                                        th:userId="${c.userId}"
+                                                        th:classifyName="${c.classifyName}"
+                                                        th:comment="${c.comment}"
+                                                        th:author="${c.author}"
+                                                        th:level="${c.level}"
+                                                        th:updateTime="${c.updateTime}"
+                                                        th:isvalid="${c.isvalid}"
+                                                        th:text="${c.classifyName}"
+                                                        data-toggle="tooltip"
+                                                        data-placement="right"
+                                                        th:title="${c.comment}"
+                                                        onclick="determineClassify(this)"
+                                                >
+                                                </button>
+                                                <span class="badge">4</span>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -248,18 +267,6 @@
         <!--背景-->
         <div class="backgroundColor">
         </div>
-        <!--进度条-->
-        <div class="progress">
-            <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 45%">
-                <span class="sr-only">45% Complete</span>
-            </div>
-        </div>
-        <!--导航栏顶部-->
-        <!--<nav class="navbar navbar-default navbar-fixed-top">
-            <div class="container">
-                ...
-            </div>
-        </nav>-->
         <!--第一层row-->
         <div class="row">
             <div class="col-md-12">
