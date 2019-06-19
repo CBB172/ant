@@ -20,11 +20,10 @@
     <script type="text/javascript" src="/static/zTree_v3/js/jquery.ztree.exedit.js" th:src="@{/zTree_v3/js/jquery.ztree.exedit.js}"></script>
     <link rel="stylesheet" href="/static/css/bootstrapStyle/bootstrapStyle.css" type="text/css" th:src="@{/css/bootstrapStyle/bootstrapStyle.css}">
     <script type="text/javascript" src="/static/js/transferCode.js" th:src="@{/js/transferCode.js}"></script>
-
     <script type="text/javascript" charset="utf-8" src="/static/text-editor/ueditor.config.js" th:src="@{/static/text-editor/ueditor.config.js}"></script>
     <script type="text/javascript" charset="utf-8" src="/static/text-editor/ueditor.all.min.js" th:src="@{/static/text-editor/ueditor.all.min.js}"> </script>
-
     <link href="/static/record/templatemo_style.css" rel="stylesheet" type="text/css">
+
     <script>
         /*游客检索*/
         var uid=1723693876;/*用户Id*/
@@ -39,56 +38,73 @@
         /*以下关键字只有登录用户才能查询*/
         var author=null;/*权限检索*/
     </script>
+
+    <!--功能操作JS-->
     <script>
         $(function () {
             /*var initiateData=js.lang.String.decodeHtml("[[${folder}]]");*/
             /*写日志*/
             $("#writeRecord").on("click",function () {
-                clearContentBarClass();
-                $("#n1").prop("class","");
-                $("#n4").prop("class","active");
-                /*$("#mainContent div").remove();*/
+                clearFunctionBarClass();
+                setFunctionBarClass(1,"",2,"disabled",3,"disabled",4,"active");
                 $("#mainContent").children().remove();
-                textEditor();
+                openTextEditor();
             });
             /*主界面*/
             $("#record_Info").on("click",function () {
-                clearContentBarClass();
-                $("#n1").prop("class","active");
-                $("#n4").prop("class","");
+                clearFunctionBarClass();
+                setFunctionBarClass(1,"active",2,"disabled",3,"disabled",4,"");
                 $("#mainContent div").remove();
-                classifyId=0;
-                pageNum=0;
-                pageSize=10;
-                startTime=null;
-                endTime=null;
-                getRecordIndex();
+                setSelectCond(uid,password,0,0,10,null,null,null,null);
+                getRecordBrief();
             });
             $("#bf0").on("click",function () {
 
             });
-        })
-    </script>
-    <script>
-        /*清除顶部分类样式*/
-        function clearContentBarClass() {
-            $("#record_mi_Index li").prop("class","");
-        }
-        /*清除左边分类样式为默认样式*/
-        function clearClassifyClass() {
-            $("#record_classifyList li").prop("class","disabled");
-            $("#record_classifyList li a").css("color","");
-        }
+            
+        });
         /*点击分类的日志*/
         function determineClassify(obj) {
             classifyId=$(obj).attr("classifyId");
             $(obj).css("color","lightblue");
-            clearClassifyClass();
-            getRecordIndex();
+            clearClassifyStyle();
+            getRecordBrief();
         }
-        function getRecordIndex() {
-            //load方式：body全清空，并返回特定的fragment(/record/RecordHome::fra)
-            //ajax方式：body不清空，并返回特定的fragment(/record/RecordHome::fra)
+    </script>
+
+    <!--功能性JS-->
+    <script>
+        /*清除顶部功能区样式*/
+        function clearFunctionBarClass() {
+            $("#record_mi_Index li").prop("class","");
+        }
+        /*设置顶部功能区样式*/
+        function setFunctionBarClass(a,a1,b,b1,c,c1,d,d1) {
+            $("#n"+a+"").prop("class",""+a1+"");
+            $("#n"+b+"").prop("class",""+b1+"");
+            $("#n"+c+"").prop("class",""+c1+"");
+            $("#n"+d+"").prop("class",""+d1+"");
+        }
+        /*清除左边分类样式为默认样式*/
+        function clearClassifyStyle() {
+            $("#record_classify li").prop("class","disabled");
+            $("#record_classify li a").css("color","");
+        }
+        /*设置查询条件*/
+        function setSelectCond(id,pwd,classifyI,pageN,pageS,startT,endT,keyW,contentW,auth) {
+            uid=id;
+            password=pwd;
+            classifyId=classifyI;
+            pageNum=pageN;
+            pageSize=pageS;
+            startTime=startT;
+            endTime=endT;
+            keywords=keyW;
+            contentWords=contentW;
+            author=auth;
+        }
+        /*查询日志简要*/
+        function getRecordBrief() {
             $.ajax({
                 url: "/record/recordselect",
                 data:{
@@ -107,6 +123,7 @@
                 }
             });
         }
+        /*查询单条日志*/
         function getRecordDetail() {
             $.ajax({
                 url: "/record/recordSelectDetail",
@@ -128,22 +145,39 @@
                 }
             });
         }
-        function textEditor() {
+        /*打开文本编辑器*/
+        function openTextEditor() {
             $.ajax({
                 url: "/common/texteditor",
                 type: 'POST',
                 success: function (data) {
-                    console.log(data);
+                    loadJs("/static/text-editor/ueditor.config.js");
+                    loadJs("/static/text-editor/ueditor.all.min.js");
                     $("#mainContent").html(data);
                 }
             });
         }
+        function resizeMiddleLeft() {
+            
+        }
+        function resizeMiddleRight() {
+
+        }
     </script>
+
+    <!--其它JS-->
     <script>
         $(function () {
             $('[data-toggle="tooltip"]').tooltip()
-        })
+        });
+        function loadJs(file){
+            var head = $("head").remove("script[role='reload']");
+            $("<scri"+"pt>"+"</scr"+"ipt>").attr({
+                role:'reload',src:file,type:'text/javascript'}).appendTo(head);
+        }
     </script>
+
+    <!--Style-->
     <style>
         body{
             background-image: url("/static/img/login_background3.png");
@@ -230,7 +264,13 @@
             </div>
         </div>
 
-        <!--3层-->
+        <div class="row">
+            <div class="col-md-12">
+
+            </div>
+        </div>
+
+        <!--最底层-->
         <div class="row">
             <div class="col-md-12">
                 <div th:replace="/record/Record::b1"></div>
@@ -291,7 +331,7 @@
 
     <div th:fragment="ml1" id="ml1">
         <h1>&nbsp;▶日志分类◀</h1>
-        <ul id="record_classifyList" th:each="c:${classify}">
+        <ul id="record_classify" th:each="c:${classify}">
             <li>&nbsp;<a href="#"
                    th:classifyId="${c.classifyId}"
                    th:fid="${c.fid}"
@@ -307,7 +347,7 @@
                    data-placement="right"
                    th:title="${c.comment}"
                    onclick="determineClassify(this)"
-            >classify</a></li>
+            ></a></li>
         </ul>
         <div class="cleaner_with_divider">&nbsp;
         </div>
