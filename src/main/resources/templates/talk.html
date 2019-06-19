@@ -20,8 +20,31 @@
             data:{"userid":1234},
             dataType:"JSON",
             success:function (a) {
-
                 console.log(a);
+                $.each(a,function (s,h) {
+                    console.log(s);
+                    console.log(h);
+                    $.each(h,function (a,b) {
+
+                        console.log(a);
+                        console.log(b);
+                        if (a=="content")
+                        {
+
+                            var contenta="<div class='a2'>"+b+"</div>"
+                            $(".b1").append(contenta);
+                        }
+                        if (a=="updateTime") {
+                            var timea = "<div class='a3'>"+b+"</div>"
+                            $(".b1").append(timea);
+                        }
+                        if (a=="userId"){
+                            $("h1").get(0).innerText="HELLO,"+b;
+                        }
+
+                    });
+
+                })
 
             }
         })
@@ -30,13 +53,61 @@
 </script>
 <style>
     body{
-        background: ;
+        background-image: url("/Path/background.jpg");
+    }
+    .a1{
+        background: url("/Path/6.png") ;
+        height: 814px;
+        width: 1391px;
+        position: relative;
+        left: 224px;
+        top: 41px;
+        border: 1px solid #2aabd2;
+        overflow:hidden;
+        color: rgba(255, 255, 255, 0.96);
+        font-weight:bold
+    }
+    .a2{
+        width: 750px;
+        height: 125px;
+        position: relative;
+        left: 324px;
+        top: -82px;
+        overflow:hidden;
+        text-align:center;
+        display: table-cell;
+        vertical-align:middle;
+        font-size: 150%;
+        background: url("/Path/9.png") no-repeat;
+    }
+    .a3{
+        width: 250px;
+        height: 100px;
+        position: relative;
+        left: 28px;
+        top: 68px;
+        overflow:hidden;
+        font-size: 120%;
+        font-style:italic;
+    }
+    .b1{
+        width: 1140px;
+        position: relative;
+        height: 626px;
+        left: 108px;
+        top: 37px;
+        border: 1px solid #21bb2d;
+        overflow:auto;
     }
 </style>
 <body>
 <div  class="lead">头部文件</div>
-<div>
-<img src="../Path/aa.jpg">
+<div class="a1">
+    <div><h1></h1></div>
+    <div class="b1">
+        <div class="a3">时间轴</div>
+        <div class="a2">心情</div>
+    </div>
 </div>
 </body>
 </html>
