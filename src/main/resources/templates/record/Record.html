@@ -5,15 +5,10 @@
     <title>Free Design Template - Free CSS Template</title>
     <meta name="keywords" content="free design template, CSS template, HTML website">
     <meta name="description" content="Free Design Template, Free CSS Website, XHTML CSS layout">
-    <!-- jQuery (Bootstrap 的所有 JavaScript 插件都依赖 jQuery，所以必须放在前边) -->
     <script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
-    <!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js"></script>
-    <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <!-- 可选的 Bootstrap 主题文件（一般不用引入） -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
-    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     <script type="text/javascript" src="/static/zTree_v3/js/jquery.ztree.core.js" th:src="@{/zTree_v3/js/jquery.ztree.core.js}"></script>
     <script type="text/javascript" src="/static/zTree_v3/js/jquery.ztree.excheck.js" th:src="@{/zTree_v3/js/jquery.ztree.excheck.js}"></script>
@@ -23,7 +18,6 @@
     <script type="text/javascript" charset="utf-8" src="/static/text-editor/ueditor.config.js" th:src="@{/static/text-editor/ueditor.config.js}"></script>
     <script type="text/javascript" charset="utf-8" src="/static/text-editor/ueditor.all.min.js" th:src="@{/static/text-editor/ueditor.all.min.js}"> </script>
     <link href="/static/record/templatemo_style.css" rel="stylesheet" type="text/css">
-
     <script>
         /*游客检索*/
         var uid=1723693876;/*用户Id*/
@@ -48,6 +42,8 @@
                 clearFunctionBarClass();
                 setFunctionBarClass(1,"",2,"disabled",3,"disabled",4,"active");
                 $("#mainContent").children().remove();
+                $("#editorArea").children().remove();
+                $("#editorAreaDiv").prop("hidden",false);
                 openTextEditor();
             });
             /*主界面*/
@@ -153,7 +149,7 @@
                 success: function (data) {
                     loadJs("/static/text-editor/ueditor.config.js");
                     loadJs("/static/text-editor/ueditor.all.min.js");
-                    $("#mainContent").html(data);
+                    $("#editorArea").html(data);
                 }
             });
         }
@@ -192,6 +188,10 @@
             background-attachment:fixed;
             z-index: -1;
         }
+        .resetACSS{
+            text-decoration:none;
+        }
+
     </style>
 </head>
 <body>
@@ -226,8 +226,15 @@
             <div class="col-md-3" style="left: -10px">
                 <div class="row">
                     <div class="col-md-10 templatemo_content_column_one">
-                        <div th:replace="/record/Record::ml1"></div>
-                        <div th:replace="/record/Record::ml2"></div>
+                        <h1>
+                            <a role="button" data-toggle="collapse" href="#mlc" aria-expanded="true" style="position: relative;float: right" class="resetACSS">
+                                ▽&nbsp;▽&nbsp;▽&nbsp;▽&nbsp;▽&nbsp;▽&nbsp;▽&nbsp;▽&nbsp;▽&nbsp;▽&nbsp;▽&nbsp;▽&nbsp;▽&nbsp;▽&nbsp;▽
+                            </a>
+                        </h1>
+                        <div id="mlc" class="panel-collapse collapse in" >
+                            <div th:replace="/record/Record::ml1"></div>
+                            <div th:replace="/record/Record::ml2"></div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -264,9 +271,8 @@
             </div>
         </div>
 
-        <div class="row">
-            <div class="col-md-12">
-
+        <div class="row" id="editorAreaDiv" hidden="hidden">
+            <div class="col-md-12" id="editorArea">
             </div>
         </div>
 
@@ -283,6 +289,13 @@
         </div>
     </div>
 </div>
+<!--??????????????????????-->
+
+<!--<a role="button" data-toggle="collapse" href="#mlc1" aria-expanded="true" style="position: relative;float: right">▼&nbsp;&nbsp;</a>
+<div id="collapseOne" class="panel-collapse collapse in" >
+
+</div>-->
+
 
 
 
@@ -330,45 +343,54 @@
     </div>
 
     <div th:fragment="ml1" id="ml1">
-        <h1>&nbsp;▶日志分类◀</h1>
-        <ul id="record_classify" th:each="c:${classify}">
-            <li>&nbsp;<a href="#"
-                   th:classifyId="${c.classifyId}"
-                   th:fid="${c.fid}"
-                   th:userId="${c.userId}"
-                   th:classifyName="${c.classifyName}"
-                   th:comment="${c.comment}"
-                   th:author="${c.author}"
-                   th:level="${c.level}"
-                   th:updateTime="${c.updateTime}"
-                   th:isvalid="${c.isvalid}"
-                   th:text="${c.classifyName}"
-                   data-toggle="tooltip"
-                   data-placement="right"
-                   th:title="${c.comment}"
-                   onclick="determineClassify(this)"
-            ></a></li>
-        </ul>
-        <div class="cleaner_with_divider">&nbsp;
+        <h1>
+            &nbsp;▶日志分类◀
+            <a role="button" data-toggle="collapse" href="#mlc1" aria-expanded="true" style="position: relative;float: right">▼&nbsp;&nbsp;</a>
+        </h1>
+        <div id="mlc1" class="panel-collapse collapse in" >
+            <ul id="record_classify" th:each="c:${classify}">
+                <li>&nbsp;<a href="#"
+                             th:classifyId="${c.classifyId}"
+                             th:fid="${c.fid}"
+                             th:userId="${c.userId}"
+                             th:classifyName="${c.classifyName}"
+                             th:comment="${c.comment}"
+                             th:author="${c.author}"
+                             th:level="${c.level}"
+                             th:updateTime="${c.updateTime}"
+                             th:isvalid="${c.isvalid}"
+                             th:text="${c.classifyName}"
+                             data-toggle="tooltip"
+                             data-placement="right"
+                             th:title="${c.comment}"
+                             onclick="determineClassify(this)"
+                ></a></li>
+            </ul>
         </div>
+        <div class="cleaner_with_divider"></div>
     </div>
 
     <div th:fragment="ml2" id="ml2">
-        <h1>&nbsp;▶时间轴◀</h1>
-        <ul>
-            <li>&nbsp;<a href="#">2019 - December</a></li>
-            <li>&nbsp;<a href="#">2019 - November</a></li>
-            <li>&nbsp;<a href="#">2019 - October</a></li>
-            <li>&nbsp;<a href="#">2019 - September</a></li>
-            <li>&nbsp;<a href="#">2019 - August</a></li>
-            <li>&nbsp;<a href="#">2019 - July</a></li>
-            <li>&nbsp;<a href="#">2019 - June</a></li>
-            <li>&nbsp;<a href="#">2019 - May</a></li>
-            <li>&nbsp;<a href="#">2019 - April</a></li>
-            <li>&nbsp;<a href="#">2019 - March</a></li>
-            <li>&nbsp;<a href="#">2019 - February</a></li>
-            <li>&nbsp;<a href="#">2019 - January</a></li>
-        </ul>
+        <h1>
+            &nbsp;▶时间轴◀
+            <a role="button" data-toggle="collapse" href="#mlc2" aria-expanded="true" style="position: relative;float: right">▼&nbsp;&nbsp;</a>
+        </h1>
+        <div id="mlc2" class="panel-collapse collapse in" >
+            <ul>
+                <li>&nbsp;<a href="#">2019 - December</a></li>
+                <li>&nbsp;<a href="#">2019 - November</a></li>
+                <li>&nbsp;<a href="#">2019 - October</a></li>
+                <li>&nbsp;<a href="#">2019 - September</a></li>
+                <li>&nbsp;<a href="#">2019 - August</a></li>
+                <li>&nbsp;<a href="#">2019 - July</a></li>
+                <li>&nbsp;<a href="#">2019 - June</a></li>
+                <li>&nbsp;<a href="#">2019 - May</a></li>
+                <li>&nbsp;<a href="#">2019 - April</a></li>
+                <li>&nbsp;<a href="#">2019 - March</a></li>
+                <li>&nbsp;<a href="#">2019 - February</a></li>
+                <li>&nbsp;<a href="#">2019 - January</a></li>
+            </ul>
+        </div>
         <div class="cleaner_with_divider">&nbsp;
         </div>
     </div>
