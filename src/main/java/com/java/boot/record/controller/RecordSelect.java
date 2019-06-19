@@ -1,6 +1,7 @@
 package com.java.boot.record.controller;
 
 import com.java.boot.record.entity.AntRecordClassify;
+import com.java.boot.record.entity.AntRecordSel;
 import com.java.boot.record.entity.AntRecordWithBLOBs;
 import com.java.boot.record.service.IRecordInitiate;
 import com.java.boot.record.service.IRecordSelect;
@@ -29,18 +30,18 @@ public class RecordSelect {
     @Autowired
     private IRecordSelect iRecordSelect;
 
-    @RequestMapping("recordSelect")
-    public String recordClass(String uid, String password, int classifyId, @RequestParam(defaultValue = "0") int pageNum, @RequestParam(defaultValue = "10")int pageSize, Model model, HttpSession session){
+    @RequestMapping("recordselect")
+    public String recordClassify(AntRecordSel antRecordSel, Model model, HttpSession session){
         List<AntRecordWithBLOBs> contentBrief=null;
-        if(uid==null){
+        if(antRecordSel.getUid()==null){
             //游客登录
-            contentBrief = iRecordSelect.recordSelectVisitor(classifyId,pageNum,pageSize);
+            contentBrief = iRecordSelect.recordSelectVisitor(antRecordSel.getClassifyId(),antRecordSel.getPageNum(),antRecordSel.getPageSize());
         }else {
             //正常登录
-            contentBrief = iRecordSelect.recordSelectUser(uid, password,classifyId,pageNum,pageSize);
+            contentBrief = iRecordSelect.recordSelectUser(antRecordSel.getUid(), antRecordSel.getPassword(),antRecordSel.getClassifyId(),antRecordSel.getPageNum(),antRecordSel.getPageSize());
         }
         model.addAttribute("contentBrief",contentBrief);
-        return "record/RecordHome::showContentBrief";
+        return "record/Record::mm1";
     }
 
 }

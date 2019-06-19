@@ -44,6 +44,5 @@ public class WebMvcController implements WebMvcConfigurer {
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.addViewController("/ant/loginpage").setViewName("Login");
-        registry.addViewController("/test").setViewName("record/Record");
     }
 }

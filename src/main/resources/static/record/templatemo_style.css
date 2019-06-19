@@ -57,7 +57,7 @@ body {
     font-family: Verdana, Arial, san-serif;
     font-size: 11px;
     color: #CCC;
-    background: rgba(0, 0, 0, 0.75) url("/static/record/images/templatemo_main_bg.jpg") top repeat-x;
+    /*background: rgba(0, 0, 0, 0.75) url("/static/record/images/templatemo_main_bg.jpg") top repeat-x;*/
 }
 a:link, a:visited {
     color: #f5ea01;
@@ -95,7 +95,23 @@ p {
 }
 .comment {
     padding-left: 20px;
+    padding-right: 20px;
     margin-left: 5px;
+    margin-right: 5px;
+    background: rgba(0, 0, 0, 0.75) url("/static/record/images/templatemo_comment_icon.jpg") bottom left no-repeat;
+}
+.approve_record {
+    padding-left: 20px;
+    padding-right: 20px;
+    margin-left: 5px;
+    margin-right: 5px;
+    background: rgba(0, 0, 0, 0.75) url("/static/record/images/approve_record.jpg") bottom left no-repeat;
+}
+.disapprove_record {
+    padding-left: 20px;
+    padding-right: 20px;
+    margin-left: 5px;
+    margin-right: 5px;
     background: rgba(0, 0, 0, 0.75) url("/static/record/images/templatemo_comment_icon.jpg") bottom left no-repeat;
 }
 /* content and header panel */
@@ -103,7 +119,7 @@ p {
     clear: both;
     width:100%;
     margin: 0 auto;
-    background: rgba(0, 0, 0, 0.75) url("/static/record/images/templatemo_top_bg.jpg") top center no-repeat;
+    background: rgba(0, 0, 0, 0.35) url("/static/record/images/templatemo_top_bg.jpg") top center no-repeat;
 }
 .templatemo_header_panel .templatemo_header_section{
     clear: both;
@@ -120,7 +136,7 @@ p {
 .templatemo_header_section .tagline {
     padding: 15px 0 0 165px;
     font-size: 20px;
-    color: #6b5927;
+    color: rgba(107, 89, 39, 0.65);
 }
 /* end of header */
 /* menu */
@@ -131,7 +147,7 @@ p {
     margin: 0 auto;
     margin-bottom: 10px;
     color: #ffffff;
-    background: rgba(0, 0, 0, 0.75) url("/static/record/images/templatemo_menu_bg_repeat.jpg") repeat-x;
+    background: rgba(0, 0, 0, 0.50) url("/static/record/images/templatemo_menu_bg_repeat.jpg") repeat-x;
 }
 .templatemo_menu_panel .templatemo_menu_section{
     width: 930px;
@@ -139,7 +155,7 @@ p {
     margin:0 auto;
     padding: 0 0 0 30px;
     color: #03a0a6;
-    background: rgba(0, 0, 0, 0.75) url("/static/record/images/templatemo_menu_bg.jpg") no-repeat;
+    background: rgba(0, 0, 0, 0.50) url("/static/record/images/templatemo_menu_bg.jpg") no-repeat;
 }
 .templatemo_menu_section ul {
     float: left;
@@ -183,7 +199,7 @@ p {
     margin: 0 0 0 10px;
     padding: 10px 0 10px 0;
     background: rgba(107, 89, 39, 0.8) url("/static/record/images/templatemo_180_column_bg.jpg") top center no-repeat;
-    background-size: 200px 32px;
+    background-size: 200px 75px;
 }
 .templatemo_content_column_two {
     float: left;

@@ -32,7 +32,9 @@ public class RecordSelectImpl implements IRecordSelect{
         //游客查看信息
         AntRecordExample antRecordExample=new AntRecordExample();
         AntRecordExample.Criteria criteria = antRecordExample.createCriteria();
-        criteria.andClassifyEqualTo(classifyId);
+        if(classifyId>0){
+            criteria.andClassifyEqualTo(classifyId);
+        }
         criteria.andAuthorEqualTo(0);//权限为公开
         criteria.andIsvalidEqualTo(true);//未被删除
         criteria.andClassifyBetween(0,10000);//分类未被加密
@@ -50,7 +52,9 @@ public class RecordSelectImpl implements IRecordSelect{
         //已登陆的用户[查看当前用户所有的日志简要信息]
         AntRecordExample antRecordExample=new AntRecordExample();
         AntRecordExample.Criteria criteria = antRecordExample.createCriteria();
-        criteria.andClassifyEqualTo(classifyId);
+        if(classifyId>0){
+            criteria.andClassifyEqualTo(classifyId);
+        }
         criteria.andUserIdEqualTo(uid);//当前用户
         criteria.andIsvalidEqualTo(true);//未被删除
         antRecordExample.setOrderByClause("publish_time DESC");//时间降序
