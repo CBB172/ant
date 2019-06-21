@@ -9,11 +9,7 @@ public class aall {
         String address="供应商信息：";
         Field[] fields = class1.getDeclaredFields();
         for (Field field : fields) {
-            if (field.isAnnotationPresent(Field.class)) {
-                
-            } else {
-                
-            }
+           
         }
     }
 }
