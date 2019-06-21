@@ -5,5 +5,6 @@ public class test {
         bookInfenProxy bookInfenProxy = new bookInfenProxy();
         bookImpl bookImpl = (com.java.boot.cglib.bookImpl) bookInfenProxy.getInstance(new bookImpl());
         bookImpl.addBook();
+        
     }
 }
