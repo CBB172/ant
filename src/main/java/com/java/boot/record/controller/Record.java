@@ -55,12 +55,6 @@ public class Record {
         return "record/Record";
     }
 
-    @RequestMapping("initiateData")
-    @ResponseBody
-    public PageInfo<AntRecordWithBLOBs> initiate(String uid, String password){
-        return null;
-    }
-
     @Autowired
     private IRecordSelectService iRecordSelect;
 
