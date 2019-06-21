@@ -11,8 +11,8 @@ import java.util.List;
  * @Date: 2019/6/15 15:29
  * @Description: No Description
  */
-public interface IRecordSelect {
-    //【游客】时间顺序获取日志选择性的简要(根据分类Id)
+public interface IRecordSelectService {
+    //【游客】时间顺序获取日志的简要(根据分类Id)
     List<AntRecordWithBLOBs> recordSelectVisitor(int classifyId, int pageNum, int pageSize);
 
     //【登录人】时间顺序获取日志简要(根据分类Id)

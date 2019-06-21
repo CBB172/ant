@@ -319,7 +319,14 @@ p {
     font-weight: bold;
     border: none;
 }
-.ad_section .ad_125x125_box {
+.ad_section {
+    float: left;
+    margin: 0 0 5px 5px;
+    width: 125px;
+    height: 125px;
+}
+.ad_125x125_box {
+    position:relative;
     float: left;
     margin: 0 0 5px 5px;
     width: 120px;
@@ -327,6 +334,8 @@ p {
 }
 .ad_125x125_box img {
     border: none;
+    width: 125px;
+    height: 125px;
 }
 .column_three_section .popular_post {
     list-style: none;

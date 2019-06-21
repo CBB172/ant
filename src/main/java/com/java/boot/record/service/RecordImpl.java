@@ -20,7 +20,7 @@ import java.util.List;
  * @Description: No Description
  */
 @Service
-public class RecordInitiateImpl implements IRecordInitiate{
+public class RecordImpl implements IRecord {
     @Resource
     private AntUserMapper antUserMapper;
     @Resource

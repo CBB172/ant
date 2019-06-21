@@ -1,22 +1,24 @@
-package com.java.boot.util.controller;
+package com.java.boot.record.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * Created with IntelliJ IDEA
  *
  * @Author: Summer
- * @Date: 2019/6/18 19:52
+ * @Date: 2019/6/21 14:45
  * @Description: No Description
  */
-@RequestMapping("/common")
+@RequestMapping("/record")
 @Controller
-public class TextEditor {
+public class RecordEditor {
 
-    @RequestMapping("texteditor")
-    public String textEditor(){
+
+    @RequestMapping("recordEditor")
+    public String recordEditor(Model model){
+
         return "common/TextEditor::editor";
     }
 }

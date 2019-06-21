@@ -10,14 +10,12 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-    <script type="text/javascript" src="/static/zTree_v3/js/jquery.ztree.core.js" th:src="@{/zTree_v3/js/jquery.ztree.core.js}"></script>
-    <script type="text/javascript" src="/static/zTree_v3/js/jquery.ztree.excheck.js" th:src="@{/zTree_v3/js/jquery.ztree.excheck.js}"></script>
-    <script type="text/javascript" src="/static/zTree_v3/js/jquery.ztree.exedit.js" th:src="@{/zTree_v3/js/jquery.ztree.exedit.js}"></script>
     <link rel="stylesheet" href="/static/css/bootstrapStyle/bootstrapStyle.css" type="text/css" th:src="@{/css/bootstrapStyle/bootstrapStyle.css}">
     <script type="text/javascript" src="/static/js/transferCode.js" th:src="@{/js/transferCode.js}"></script>
     <script type="text/javascript" charset="utf-8" src="/static/text-editor/ueditor.config.js" th:src="@{/static/text-editor/ueditor.config.js}"></script>
     <script type="text/javascript" charset="utf-8" src="/static/text-editor/ueditor.all.min.js" th:src="@{/static/text-editor/ueditor.all.min.js}"> </script>
     <link href="/static/record/templatemo_style.css" rel="stylesheet" type="text/css">
+
     <script>
         /*游客检索*/
         var uid=1723693876;/*用户Id*/
@@ -33,7 +31,6 @@
         var author=null;/*权限检索*/
     </script>
 
-    <!--功能操作JS-->
     <script>
         $(function () {
             /*var initiateData=js.lang.String.decodeHtml("[[${folder}]]");*/
@@ -44,6 +41,8 @@
                 $("#mainContent").children().remove();
                 $("#editorArea").children().remove();
                 $("#editorAreaDiv").prop("hidden",false);
+                middleLeftIndexFL();
+                middleRightIndexFL();
                 openTextEditor();
             });
             /*主界面*/
@@ -54,21 +53,34 @@
                 setSelectCond(uid,password,0,0,10,null,null,null,null);
                 getRecordBrief();
             });
-            $("#bf0").on("click",function () {
-
+            /*清除输入的内容*/
+            $("#clearRecord").on("click",function () {
+                if(confirm("确认清除？这将无法撤回！")){
+                    ue.setContent("");
+                }
             });
-            
+            /*保存输入的内容，下次还可编辑*/
+            $("#saveRecord").on("click",function () {
+                setCookie("record_content",ue.getContent());
+                $("[data-toggle='tooltip']").tooltip();
+            });
+            /*发布日志内容*/
+            $("#submitRecord").on("click",function () {
+                ue.getPlainTxt();
+                ue.getContent();
+            });
+            /*加载cookies存入的日志*/
+            $("#loadRecord").on("click",function () {
+                if(confirm("是否加载之前写入的日志？这将清空当前内容！")){
+                    var c=getCookie("record_content");
+                    if(c!=null){
+                        ue.setContent(c);
+                    }
+                }
+            });
         });
-        /*点击分类的日志*/
-        function determineClassify(obj) {
-            classifyId=$(obj).attr("classifyId");
-            $(obj).css("color","lightblue");
-            clearClassifyStyle();
-            getRecordBrief();
-        }
     </script>
 
-    <!--功能性JS-->
     <script>
         /*清除顶部功能区样式*/
         function clearFunctionBarClass() {
@@ -98,6 +110,13 @@
             keywords=keyW;
             contentWords=contentW;
             author=auth;
+        }
+        /*点击分类的日志*/
+        function determineClassify(obj) {
+            classifyId=$(obj).attr("classifyId");
+            $(obj).css("color","lightblue");
+            clearClassifyStyle();
+            getRecordBrief();
         }
         /*查询日志简要*/
         function getRecordBrief() {
@@ -144,7 +163,7 @@
         /*打开文本编辑器*/
         function openTextEditor() {
             $.ajax({
-                url: "/common/texteditor",
+                url: "/record/recordEditor",
                 type: 'POST',
                 success: function (data) {
                     loadJs("/static/text-editor/ueditor.config.js");
@@ -153,15 +172,32 @@
                 }
             });
         }
-        function resizeMiddleLeft() {
-            
+        /*设置左边的导航为展开*/
+        function middleLeftIndexEX() {
+            if($('#mlc').hasClass('in')===false){
+                $("#lcon").click();
+            }
         }
-        function resizeMiddleRight() {
-
+        /*设置左边的导航为折叠*/
+        function middleLeftIndexFL() {
+            if($('#mlc').hasClass('in')===true){
+                $("#lcon").click();
+            }
+        }
+        /*设置右边的导航为展开*/
+        function middleRightIndexEX() {
+            if($('#mrc').hasClass('in')===false){
+                $("#rcon").click();
+            }
+        }
+        /*设置右边的导航为折叠*/
+        function middleRightIndexFL() {
+            if($('#mrc').hasClass('in')===true){
+                $("#rcon").click();
+            }
         }
     </script>
 
-    <!--其它JS-->
     <script>
         $(function () {
             $('[data-toggle="tooltip"]').tooltip()
@@ -171,8 +207,41 @@
             $("<scri"+"pt>"+"</scr"+"ipt>").attr({
                 role:'reload',src:file,type:'text/javascript'}).appendTo(head);
         }
+        //实例化编辑器  去除不必要的编辑功能
+        var ue = UE.getEditor('editor', {
+            enableContextMenu:false,//禁止使用右键菜单
+            elementPathEnabled:false,//不启用底部元素路径
+            maximumWords:100000, //允许的最大字符数
+            autoHeightEnabled:false//禁止自动高度
+        });
+        /*设置cookies*/
+        function setCookie(name,value){
+            var Days = 365;
+            var exp = new Date();
+            exp.setTime(exp.getTime() + Days*24*60*60*1000);
+            document.cookie = name + "="+ escape (value) + ";expires=" + exp.toGMTString();
+        }
+        /*删除cookies*/
+        function delCookie(name){
+            var exp = new Date();
+            exp.setTime(exp.getTime() - 1);
+            var cVal=getCookie(name);
+            if(cVal!=null){
+                document.cookie= name + "="+cVal+";expires="+exp.toGMTString();
+            }
+        }
+        /*读取cookies*/
+        function getCookie(keyName) {
+            var arr = document.cookie.split("; ");
+            for ( var i=0,len=arr.length;i<len;i++ ){
+                var arrName = arr[i].split("=");
+                if( arrName[0] == keyName ){
+                    return decodeURIComponent( arrName[1] );
+                }
+            }
+            return '';
+        }
     </script>
-
     <!--Style-->
     <style>
         body{
@@ -191,7 +260,28 @@
         .resetACSS{
             text-decoration:none;
         }
-
+    </style>
+    <style type="text/css">
+        #tips {
+            display: inline-block;
+            position: relative;
+            padding: 0px 15px;
+            border-radius: 5px;
+            border: 1px solid #DDD;
+        }
+        #tips:after,
+        #tips:before {
+            content: "";
+            position: absolute;
+            left: 10px;
+            bottom: -16px;
+            border: 8px solid transparent;
+            border-top: 8px solid #DDD;
+        }
+        #tips:after {
+            border-top: 8px solid #FFF;
+            bottom: -15px;
+        }
     </style>
 </head>
 <body>
@@ -227,7 +317,7 @@
                 <div class="row">
                     <div class="col-md-10 templatemo_content_column_one">
                         <h1>
-                            <a role="button" data-toggle="collapse" href="#mlc" aria-expanded="true" style="position: relative;float: right" class="resetACSS">
+                            <a id="lcon" role="button" data-toggle="collapse" href="#mlc" aria-expanded="true" style="position: relative;float: right" class="resetACSS">
                                 ▽&nbsp;▽&nbsp;▽&nbsp;▽&nbsp;▽&nbsp;▽&nbsp;▽&nbsp;▽&nbsp;▽&nbsp;▽&nbsp;▽&nbsp;▽&nbsp;▽&nbsp;▽&nbsp;▽
                             </a>
                         </h1>
@@ -254,25 +344,84 @@
             <!--右侧-->
             <div class="col-md-3" style="left: -45px">
                 <div class="row">
-                    <div class="col-md-12">
-                        <div th:replace="/record/Record::mr1"></div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <div th:replace="/record/Record::mr2"></div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <div th:replace="/record/Record::mr3"></div>
+                    <div class="col-md-12 templatemo_content_column_three">
+                        <h1>
+                            <a id="rcon" role="button" data-toggle="collapse" href="#mrc" aria-expanded="true" style="position: relative;float: right">
+                                ▽&nbsp;▽&nbsp;▽&nbsp;▽&nbsp;▽&nbsp;▽&nbsp;▽&nbsp;▽&nbsp;▽&nbsp;▽&nbsp;▽&nbsp;▽&nbsp;▽&nbsp;▽&nbsp;▽&nbsp;▽&nbsp;▽&nbsp;▽&nbsp;▽&nbsp;▽&nbsp;▽
+                            </a>
+                        </h1>
+                        <div id="mrc" class="panel-collapse collapse in" style="position: relative;left: -11px">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div th:replace="/record/Record::mr1"></div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div th:replace="/record/Record::mr2"></div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div th:replace="/record/Record::mr3"></div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
 
         <div class="row" id="editorAreaDiv" hidden="hidden">
-            <div class="col-md-12" id="editorArea">
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-1">
+                        <h2 style=" position:relative; float:left; display: inline; top: -18px;">Title</h2>
+                    </div>
+                    <div class="col-md-3">
+                        <input type="text" class="form-control" style="display: inline; position:relative; float:left; " />
+                    </div>
+                    <div class="col-md-8">
+                        <div style="position: relative; float: right;margin: 0px 5px 0px 5px; padding: 0 0 0 0 ;">
+                            <div style="position: relative; float: left; left: -25px; top: 2px">
+                                权限：
+                                <select class="btn btn-default btn-sm" >
+                                    <option value="0">公开</option>
+                                    <option value="1">好友可见</option>
+                                    <option value="2">私密</option>
+                                </select>
+                            </div>
+                            <div style="position: relative; float: left; left: -20px; top: 2px">
+                                分类：
+                                <select class="btn btn-default btn-sm" >
+                                    <option>分类1</option>
+                                    <option>分类2</option>
+                                    <option>分类3</option>
+                                </select>
+                            </div>
+                            <div style="position: relative; float: left; left: -15px; top: 2px">
+                                置顶:
+                                <select class="btn btn-default btn-sm" >
+                                    <option value="0">否</option>
+                                    <option value="1">是</option>
+                                </select>
+                            </div>
+                            <div style="position: relative; float: right">
+                                <input id="clearRecord" type="button" class="btn btn-danger" value="清空"/>
+                                <input id="loadRecord" type="button" class="btn btn-warning" value="加载"/>
+                                <input id="saveRecord" type="button" class="btn btn-primary" value="保存"/>
+                                <input id="submitRecord" type="button" class="btn btn-success" value="提交"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="tips" style="position: relative; float: right">
+                        <p>Writing...</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12" id="editorArea">
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -289,11 +438,9 @@
         </div>
     </div>
 </div>
-<!--??????????????????????-->
 
 <!--<a role="button" data-toggle="collapse" href="#mlc1" aria-expanded="true" style="position: relative;float: right">▼&nbsp;&nbsp;</a>
 <div id="collapseOne" class="panel-collapse collapse in" >
-
 </div>-->
 
 
@@ -466,22 +613,22 @@
         <div class="templatemo_content">
             <div class="templatemo_content_column_three">
                 <div class="column_three_section">
-                    <div class="ad_section">
-                        <h1>最近相册</h1>
-                        <div class="ad_125x125_box">
+                    <h1>最近相册<a role="button" data-toggle="collapse" href="#mrc1" aria-expanded="true" style="position: relative;float: right">▼&nbsp;&nbsp;</a></h1>
+                    <div id="mrc1" class="panel-collapse collapse in" >
+                        <div class="ad_125x125_box" style="position:relative; display:inline">
                             <a href="#"><img src="/static/record/templatemo_ads.jpg" alt="ad"></a>
                         </div>
-                        <div class="ad_125x125_box">
+                        <div class="ad_125x125_box" style="position:relative; display:inline">
                             <a href="#"><img src="/static/record/templatemo_ads.jpg" alt="ad"></a>
                         </div>
-                        <div class="ad_125x125_box">
+                        <div class="ad_125x125_box" style="position:relative; display:inline">
                             <a href="#"><img src="/static/record/templatemo_ads.jpg" alt="ad"></a>
                         </div>
-                        <div class="ad_125x125_box">
+                        <div class="ad_125x125_box" style="position:relative; display:inline">
                             <a href="#"><img src="/static/record/templatemo_ads.jpg" alt="ad"></a>
                         </div>
-                        <div class="cleaner">&nbsp;</div>
                     </div>
+                    <div class="cleaner">&nbsp;</div>
                 </div>
             </div>
         </div>
@@ -491,17 +638,19 @@
         <div class="templatemo_content">
             <div class="templatemo_content_column_three">
                 <div class="column_three_section">
-                    <h1>最新留言</h1>
-                    <ul class="popular_post">
-                        <li><a href="#">爱吃鱼的猫</a><br>
-                            留言1...
-                            <span class="comment"><a href="#">(19)</a></span>
-                        </li>
-                        <li><a href="#">爱吃猫的鱼</a><br>
-                            留言2...
-                            <span class="comment"><a href="#">(21)</a></span>
-                        </li>
-                    </ul>
+                    <h1>最新留言<a role="button" data-toggle="collapse" href="#mrc2" aria-expanded="true" style="position: relative;float: right">▼&nbsp;&nbsp;</a></h1>
+                    <div id="mrc2" class="panel-collapse collapse in" >
+                        <ul class="popular_post">
+                            <li><a href="#">爱吃鱼的猫</a><br>
+                                留言1...
+                                <span class="comment"><a href="#">(19)</a></span>
+                            </li>
+                            <li><a href="#">爱吃猫的鱼</a><br>
+                                留言2...
+                                <span class="comment"><a href="#">(21)</a></span>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
                 <div class="cleaner_with_divider">&nbsp;</div>
                 <div class="cleaner">&nbsp;</div>
@@ -513,10 +662,12 @@
         <div class="templatemo_content">
             <div class="templatemo_content_column_three">
                 <div class="column_three_section">
-                    <h1>关于</h1>
-                    <p>个人博客......
-                        <a href="#">read more</a>
-                    </p>
+                    <h1>关于<a role="button" data-toggle="collapse" href="#mrc3" aria-expanded="true" style="position: relative;float: right">▼&nbsp;&nbsp;</a></h1>
+                    <div id="mrc3" class="panel-collapse collapse in" >
+                        <p>个人博客......
+                            <a href="#">read more</a>
+                        </p>
+                    </div>
                     <div class="cleaner">&nbsp;</div>
                 </div>
             </div>

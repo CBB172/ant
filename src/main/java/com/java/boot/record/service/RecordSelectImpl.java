@@ -5,6 +5,7 @@ import com.java.boot.record.dao.AntRecordClassifyMapper;
 import com.java.boot.record.dao.AntRecordMapper;
 import com.java.boot.record.entity.AntRecordExample;
 import com.java.boot.record.entity.AntRecordWithBLOBs;
+import com.java.boot.record.service.IRecordSelectService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -18,7 +19,7 @@ import java.util.List;
  * @Description: No Description
  */
 @Service
-public class RecordSelectImpl implements IRecordSelect{
+public class RecordSelectImpl implements IRecordSelectService {
 
     @Resource
     private AntUserMapper antUserMapper;

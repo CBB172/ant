@@ -13,7 +13,7 @@ import java.util.Map;
  * @Date: 2019/6/11 20:01
  * @Description: No Description
  */
-public interface IRecordInitiate {
+public interface IRecord {
 
     //判断是否登录或是否登录有误(uid 和 pwd不匹配)
     String isLogin(String uid, String password);
