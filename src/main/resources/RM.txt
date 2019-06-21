@@ -32,6 +32,10 @@
   fragment不会识别之前的JS，需要重新加载JS
   解决方法：1.写个方法重新加载JS，2.给JS定一个ID重新加载，3.
 
+8.404的问题
+  以前的pom文件引入的thymeleaf版本时为1.5.6版本，spring-boot-starter-thymeleaf为1.5.6版本，
+  但版本与springboot不兼容，导致跳转不了页面，但没有报错，
+  后来查看最新的springBoot里META-INFO的thymeleaf版本是2.1.5，后来修改pom里thymeleaf配置就可以了
 
 
 
