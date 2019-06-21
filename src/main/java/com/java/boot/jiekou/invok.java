@@ -14,12 +14,19 @@ public class invok implements InvocationHandler {
         String[]methods2 = methods1[1].split(",");
         Integer number = methods2.length;
         Object resulObject = null;
+        Integer a = 0;
         for (int i = 0; i < number; i++) {
             if (i==(number-1)) {
                 String[] aa = methods2[i].split("\\)");
                 System.out.println("第"+(i+1)+"个参数类型--"+aa[0]);
+                if (aa[0].equals(methods[2])) {
+                    a = i;
+                }
             } else {
                 System.out.println("第"+(i+1)+"个参数类型--"+methods2[i]);
+                if (methods2[i].equals(methods[2])) {
+                    a = i;
+                }
             }
             
         }
@@ -28,6 +35,10 @@ public class invok implements InvocationHandler {
         Integer num  = args.length;
         for (int i = 0; i < num; i++) {
             System.out.println("第"+(i+1)+"个参数--"+args[i]);
+            if (a == i) {
+              resulObject = args[i];  
+            }
+            
         }
 
         System.out.println("接口方法调用结束");    
