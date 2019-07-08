@@ -1,7 +1,11 @@
 package com.java.boot.record.controller;
 
+import com.java.boot.record.service.IRecord;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import javax.servlet.http.HttpSession;
 
 /**
  * Created with IntelliJ IDEA
@@ -13,4 +17,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/record")
 @Controller
 public class RecordBrief {
+    @RequestMapping("recordbrief")
+    public String recordBrief(HttpSession session,String uidHome){
+        Object user = session.getAttribute("loginUser");
+
+        return null;
+    }
 }

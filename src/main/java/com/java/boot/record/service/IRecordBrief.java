@@ -1,5 +1,7 @@
 package com.java.boot.record.service;
 
+import org.springframework.web.bind.annotation.RequestMapping;
+
 /**
  * Created with IntelliJ IDEA
  *
@@ -8,4 +10,5 @@ package com.java.boot.record.service;
  * @Description: No Description
  */
 public interface IRecordBrief {
+    String getRecordBrief(String uid,String password,String uidHome,String pageNum,String pageSize);
 }

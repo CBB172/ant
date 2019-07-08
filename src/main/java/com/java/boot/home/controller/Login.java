@@ -32,7 +32,7 @@ public class Login {
 
         if(user!=null){
             HttpSession session=request.getSession();
-            session.setAttribute("loginAntUser",user.getAntId());
+            session.setAttribute("loginUser",user);
             return "200";
         }
         return "400";

@@ -325,18 +325,6 @@ p {
     width: 125px;
     height: 125px;
 }
-.ad_125x125_box {
-    position:relative;
-    float: left;
-    margin: 0 0 5px 5px;
-    width: 120px;
-    height: 120px;
-}
-.ad_125x125_box img {
-    border: none;
-    width: 125px;
-    height: 125px;
-}
 .column_three_section .popular_post {
     list-style: none;
     margin: 0;

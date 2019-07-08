@@ -1,6 +1,7 @@
 package com.java.boot.record.controller;
 
-import com.github.pagehelper.PageInfo;
+import com.java.boot.home.entity.AntUser;
+import com.java.boot.home.service.ILoginService;
 import com.java.boot.record.entity.AntRecordClassify;
 import com.java.boot.record.entity.AntRecordSel;
 import com.java.boot.record.entity.AntRecordWithBLOBs;
@@ -9,9 +10,9 @@ import com.java.boot.record.service.IRecordSelectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
@@ -27,8 +28,54 @@ import java.util.List;
 public class Record {
 
     @Autowired
-    private IRecord iRecordInitiate;
+    private ILoginService iLoginService;
+    //总的Record转发处理器
+    @RequestMapping("{s}/{w}")
+    public String transController(@PathVariable String s, @PathVariable String w, HttpSession session, Model model, HttpServletResponse response){
+        try {
+            //从Redis/(数据库)取值判断session用户
+            AntUser sessionUser=(AntUser)session.getAttribute("loginUser");
+            if(sessionUser!=null&&sessionUser.getAntId()!=null&&sessionUser.getAntPassword()!=null&&s!=null){
+                AntUser user = iLoginService.selectByPrimaryKey(sessionUser.getAntId(), sessionUser.getAntPassword());
+                if(user!=null){
+                    //正常人登录
+                    if(user.getAntId()!=null){
+                        if(user.getAntId().equals(s)){
+                            //本人登录并查看自己空间
+                            response.sendRedirect("/record/"+w);
+                            return "record/Record";
+                        }else {
+                            //访问好友日志空间
+                            response.sendRedirect("/record/"+w);
+                        }
+                    }
+                }else {
+                    //session里用户名/密码错误，密码在别处被修改！
+                    model.addAttribute("tips","对不起，您的密码被修改！当前session已被清除，请重新登陆！");
+                    session.removeAttribute("loginUser");
+                    response.sendRedirect("/record"+w);
+                    //[游客访问]
+                }
+            }else if(s!=null){
+                //[游客访问]
+            }else {
+                //访问为空，session为空，砸场子的这是
+                model.addAttribute("tips","这位游客，请问你想要访问谁的空间？");
+                return null;
+            }
+        }catch (Exception e){
+            //用户对象转换异常，session异常，也是砸场子的
+            model.addAttribute("tips","session转换异常，砸场子的？");
+            return null;
+        }
+        return null;
+    }
 
+
+
+
+    @Autowired
+    private IRecord iRecordInitiate;
     @RequestMapping("record")
     public String recordPage(AntRecordSel antRecordSel, Model model, HttpSession session){
         List<AntRecordClassify> classify=null;
@@ -53,7 +100,7 @@ public class Record {
         }
         model.addAttribute("classify",classify);
         model.addAttribute("contentBrief",contentBrief);
-        return "record/Record";
+        return "Record";
     }
 
     @Autowired
@@ -70,6 +117,6 @@ public class Record {
             contentBrief = iRecordSelect.recordSelectUser(antRecordSel.getUid(), antRecordSel.getPassword(),antRecordSel.getClassifyId(),antRecordSel.getPageNum(),antRecordSel.getPageSize());
         }
         model.addAttribute("contentBrief",contentBrief);
-        return "record/Record::mm1";
+        return "Record::mm1";
     }
 }

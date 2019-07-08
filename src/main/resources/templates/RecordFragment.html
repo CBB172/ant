@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+
+<!--片段化fragment（待引用）-->
+<div th:fragment="top" id="top">
+    <!--背景-->
+    <div class="backgroundColor">
+    </div>
+    <!--Head-->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="templatemo_header_panel">
+                <div class="templatemo_header_section">
+                    <div class="templatemo_title_section">Ant Blog</div>
+                    <br>
+                    <div class="tagline">This is mini ant for blog</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:fragment="index" id="index">
+    <!--Index-->
+    <div class="row navbar navbar-fixed-top">
+        <div class="col-md-12">
+            <div class="templatemo_menu_panel">
+                <div class="templatemo_menu_section">
+                    <ul>
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#">说说</a></li>
+                        <li><a href="#" class="current">日志</a></li>
+                        <li><a href="#">相册</a></li>
+                        <li><a href="#">留言</a></li>
+                        <li><a href="#" class="last">个人档</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:fragment="left" id="left">
+
+</div>
+
+<div th:fragment="right" id="right">
+
+</div>
+
+<div th:fragment="bottom" id="bottom">
+
+</div>
+
+<div th:fragment="main" id="main">
+
+</div>
+
+
+
+<!--片段化fragment（选择性引用）-->
+<div th:fragment="brief" id="brief">
+
+</div>
+
+<div th:fragment="detail" id="detail">
+
+</div>
+
+<div th:fragment="ml1" id="ml1">
+    <h1>
+        &nbsp;▶日志分类◀
+        <a role="button" data-toggle="collapse" href="#mlc1" aria-expanded="true" style="position: relative;float: right">▼&nbsp;&nbsp;</a>
+    </h1>
+    <div id="mlc1" class="panel-collapse collapse in" >
+        <ul id="record_classify" th:each="c:${classify}">
+            <li>&nbsp;<a href="#"
+                         th:classifyId="${c.classifyId}"
+                         th:fid="${c.fid}"
+                         th:userId="${c.userId}"
+                         th:classifyName="${c.classifyName}"
+                         th:comment="${c.comment}"
+                         th:author="${c.author}"
+                         th:level="${c.level}"
+                         th:updateTime="${c.updateTime}"
+                         th:isvalid="${c.isvalid}"
+                         th:text="${c.classifyName}"
+                         data-toggle="tooltip"
+                         data-placement="right"
+                         th:title="${c.comment}"
+                         onclick="determineClassify(this)"
+            ></a></li>
+        </ul>
+    </div>
+    <div class="cleaner_with_divider"></div>
+</div>
+
+<div th:fragment="ml2" id="ml2">
+    <h1>
+        &nbsp;▶时间轴◀
+        <a role="button" data-toggle="collapse" href="#mlc2" aria-expanded="true" style="position: relative;float: right">▼&nbsp;&nbsp;</a>
+    </h1>
+    <div id="mlc2" class="panel-collapse collapse in" >
+        <ul>
+            <li>&nbsp;<a href="#">2019 - December</a></li>
+            <li>&nbsp;<a href="#">2019 - November</a></li>
+            <li>&nbsp;<a href="#">2019 - October</a></li>
+            <li>&nbsp;<a href="#">2019 - September</a></li>
+            <li>&nbsp;<a href="#">2019 - August</a></li>
+            <li>&nbsp;<a href="#">2019 - July</a></li>
+            <li>&nbsp;<a href="#">2019 - June</a></li>
+            <li>&nbsp;<a href="#">2019 - May</a></li>
+            <li>&nbsp;<a href="#">2019 - April</a></li>
+            <li>&nbsp;<a href="#">2019 - March</a></li>
+            <li>&nbsp;<a href="#">2019 - February</a></li>
+            <li>&nbsp;<a href="#">2019 - January</a></li>
+        </ul>
+    </div>
+    <div class="cleaner_with_divider">&nbsp;
+    </div>
+</div>
+
+<div th:fragment="mi" id="mi">
+    <div class="templatemo_content">
+        <div class="templatemo_content_column_two">
+            <div class="column_two_section">
+                <ul class="nav nav-pills" id="record_mi_Index">
+                    <li id="n1" role="presentation" class="active"><a href="#" id="record_Info">简要</a></li>
+                    <li id="n2" role="presentation" class="disabled"><a href="#" id="">详情</a></li>
+                    <li id="n3" role="presentation" class="disabled"><a href="#">信息</a></li>
+                    <li id="n4" role="presentation" style="position: relative; float: right"><a href="#" id="writeRecord">Write</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:fragment="mm1" id="mm1">
+    <div th:each="c:${contentBrief}">
+
+        <div class="templatemo_content">
+            <div class="templatemo_content_column_two">
+                <div class="column_two_section">
+                    <!--发表人-->
+                    <h1><a href="http://www.cssmoban.com/" target="_parent" th:text="${c.userId}"></a></h1>
+                    <div class="post_info">
+                        <!--标题-->
+                        <a href="#" th:text="${c.recordTitle}"></a>：
+                    </div>
+                    <!--内容-->
+                    <span th:text="${c.contentBrief}"></span>
+                    <span>...</span>
+                    <!--图片-->
+                    <img src="/static/record/templatemo_image_01.jpg" alt="image" style="width: 365px">
+                    <div class="post_comment">
+                        <!--评论数-->
+                        <span style="position: relative;float: left">
+                                ✔<a href="#"><span class="approve_record" th:text="${c.approveCount}"></span></a>&nbsp;&nbsp;&nbsp;
+                            </span>
+                        <span style="position: relative;float: left">
+                                ✘<a href="#"><span class="disapprove_record" th:text="${c.disapproveCount}"></span></a>
+                            </span>
+                        <span style="position: relative;float: right">
+                                <a href="#"><span class="comment">18 comments</span></a>
+                            </span>
+                    </div>
+                    <div hidden="hidden">
+                        <p th:text="${c.recordId}"></p>
+                        <p th:text="${c.userId}"></p>
+                        <p th:text="${c.recordTitle}"></p>
+                        <p th:text="${c.publishTime}"></p>
+                        <p th:text="${c.author}"></p>
+                        <p th:text="${c.classify}"></p>
+                        <p th:text="${c.viewCount}"></p>
+                        <p th:text="${c.approveCount}"></p>
+                        <p th:text="${c.disapproveCount}"></p>
+                        <p th:text="${c.updateTime}"></p>
+                        <p th:text="${c.isvalid}"></p>
+                        <p th:text="${c.istop}"></p>
+                        <p th:text="${c.contentDetail}"></p>
+                        <p th:text="${c.contentBrief}"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:fragment="mr1" id="mr1">
+    <div class="templatemo_content">
+        <div class="templatemo_content_column_three">
+            <div class="column_three_section">
+                <h1>最近相册<a role="button" data-toggle="collapse" href="#mrc1" aria-expanded="true" style="position: relative;float: right">▼&nbsp;&nbsp;</a></h1>
+                <div id="mrc1" class="panel-collapse collapse in" >
+                    <div style="position:relative; display:inline">
+                        <a href="#"><img src="/static/record/templatemo_ads.jpg" alt="ad"></a>
+                    </div>
+                    <div style="position:relative; display:inline">
+                        <a href="#"><img src="/static/record/templatemo_ads.jpg" alt="ad"></a>
+                    </div>
+                    <div style="position:relative; display:inline">
+                        <a href="#"><img src="/static/record/templatemo_ads.jpg" alt="ad"></a>
+                    </div>
+                    <div style="position:relative; display:inline">
+                        <a href="#"><img src="/static/record/templatemo_ads.jpg" alt="ad"></a>
+                    </div>
+                </div>
+                <div class="cleaner">&nbsp;</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:fragment="mr2" id="mr2">
+    <div class="templatemo_content">
+        <div class="templatemo_content_column_three">
+            <div class="column_three_section">
+                <h1>最新留言<a role="button" data-toggle="collapse" href="#mrc2" aria-expanded="true" style="position: relative;float: right">▼&nbsp;&nbsp;</a></h1>
+                <div id="mrc2" class="panel-collapse collapse in" >
+                    <ul class="popular_post">
+                        <li><a href="#">爱吃鱼的猫</a><br>
+                            留言1...
+                            <span class="comment"><a href="#">(19)</a></span>
+                        </li>
+                        <li><a href="#">爱吃猫的鱼</a><br>
+                            留言2...
+                            <span class="comment"><a href="#">(21)</a></span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="cleaner_with_divider">&nbsp;</div>
+            <div class="cleaner">&nbsp;</div>
+        </div>
+    </div>
+</div>
+
+<div th:fragment="mr3" id="mr3">
+    <div class="templatemo_content">
+        <div class="templatemo_content_column_three">
+            <div class="column_three_section">
+                <h1>关于<a role="button" data-toggle="collapse" href="#mrc3" aria-expanded="true" style="position: relative;float: right">▼&nbsp;&nbsp;</a></h1>
+                <div id="mrc3" class="panel-collapse collapse in" >
+                    <p>个人博客......
+                        <a href="#">read more</a>
+                    </p>
+                </div>
+                <div class="cleaner">&nbsp;</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:fragment="b1" id="b1">
+    <div class="templatemo_bottom_panel">
+        <div class="bottom_panel_section">
+            <a href="#">Home</a> |
+            <a href="#">说说</a> |
+            <a href="#"> 日志</a> |
+            <a href="#">相册 </a>|
+            <a href="#">留言</a> |
+            <a href="#">个人档</a> |
+            <a href="#">返回顶部</a>
+            <br>
+            <hr>
+            Copyright © 2019
+            <a href="#"><strong>JGS_UNI</strong></a> |
+            from
+            <a href="http://www.cssmoban.com/" target="_parent">Summer</a>
+        </div>
+        <div class="cleaner">&nbsp;</div>
+    </div>
+</div>
+
+<!--<a role="button" data-toggle="collapse" href="#mlc1" aria-expanded="true" style="position: relative;float: right">▼&nbsp;&nbsp;</a>
+<div id="collapseOne" class="panel-collapse collapse in" >
+</div>-->
+
+</body>
+</html>
